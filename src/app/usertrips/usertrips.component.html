@@ -1,0 +1,52 @@
+<app-map [points]=""></app-map>
+<div class="sidepanel">
+    <section class="group user-profile">
+        <div class="hero-trip">
+            <div class="hero-bg"
+                 [ngStyle]="{'background-image': 'url(https://scontent.fbru1-1.fna.fbcdn.net/v/t31.0-8/12052662_10206868172236273_7816855590705856786_o.jpg?oh=89f6a526847e1dd7291eaaf2ae3be601&oe=5A71E3CD)'}">
+            </div>
+            <div class="overlay">
+                <div id="user">
+                    <img class="profilepic"
+                         src="https://scontent.fbru1-1.fna.fbcdn.net/v/t1.0-1/p160x160/15442123_10210391059066242_4397606732235540896_n.jpg?oh=4a072354b3a7fc67fe835e261493c63d&oe=5A772917"
+                         alt="profilepicture" class="profilepic">
+                    <span>Nick Verstocken</span>
+                    <span class="grey">Belgium, Sint-Niklaas</span>
+                </div>
+                <div class="followers">
+                    <button><span>20</span>Followers</button>
+                    <button><span>10</span>Following</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="add-trip">
+        <button><span class="lnr lnr-plus-circle"></span>Add Trip</button>
+    </section>
+    <section class="trips">
+        <div class="card" (click)='routing()'>
+            <div class="trip-name">
+                <span>Indonesië</span>
+                <span class="lnr lnr-chevron-right-circle"></span>
+            </div>
+            <div class="trip-bg" [ngStyle]="{'background-image': 'url(https://scontent.fbru1-1.fna.fbcdn.net/v/t31.0-8/22050898_10155949183909701_8041688354943879080_o.jpg?oh=5f24d8b89b4659df07f5e7247171f2f8&oe=5A873D1C)'}">
+            </div>
+        </div>
+        <div class="card">
+            <div class="trip-name">
+                <span>Nieuw Zeeland</span>
+                <span class="lnr lnr-chevron-right-circle"></span>
+            </div>
+            <div class="trip-bg" [ngStyle]="{'background-image': 'url(http://www.pullmanhotels.com/imagerie/destinations/country/new-zealand-1400x788-1.jpg)'}">
+            </div>
+        </div>
+        <div class="card">
+            <div class="trip-name">
+                <span>Gambia</span>
+                <span class="lnr lnr-chevron-right-circle"></span>
+            </div>
+            <div class="trip-bg" [ngStyle]="{'background-image': 'url(https://upload.wikimedia.org/wikipedia/commons/f/f3/Abuko_Nature_Reserve%2C_Gambia_-_December_2013.jpg)'}">
+            </div>
+        </div>
+    </section>
+</div>

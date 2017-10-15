@@ -1,1 +1,188 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+html, body {
+    font-size:14px;
+    vertical-align: baseline;
+    font-family: 'Lato', sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position:relative;
+    margin: 0; height: 100%; background: #fff;
+}
+body{
+    background:#ECF0F1;
+    position: relative;
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    z-index: 0;
+}
+body::after{
+    background: url(assets/images/bg.svg);
+    content: "";
+    opacity: 0.9;
+    position: absolute;
+    background-repeat: no-repeat;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.1;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(2px);
+    filter: blur(5px);
+}
+#map{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 56px;
+    left:500px;
+    overflow: hidden;
+}
+input{
+    font-family: 'Lato', sans-serif;
+}
+input:focus, button {
+    outline: none;
+}
+#map:hover{
+    cursor:move;
+}
+a{
+    text-decoration: none;
+}
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+}
+.group:after {
+    clear: both;
+}
+.group {
+    zoom: 1; /* For IE 6/7 (trigger hasLayout) */
+}
+.leaflet-marker-photo {
+    border: 2px solid #fff;
+    box-shadow: 3px 3px 10px #888;
+    border-radius:50%;
+}
+
+.leaflet-marker-photo div {
+    width: 100%;
+    height: 100%;
+    border-radius:50%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.leaflet-marker-photo b {
+    position: absolute;
+    top: -5px;
+    right: -7px;
+    color: #555;
+    background-color: #fff;
+    border-radius: 8px;
+    height: 12px;
+    min-width: 12px;
+    line-height: 12px;
+    text-align: center;
+    padding: 3px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+}
+/* photo/video popup */
+.leaflet-popup-photo a.leaflet-popup-close-button {
+    top: -13px;
+    right: -13px;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 12px;
+    width: 15px;
+    height: 15px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+    color: #555;
+}
+.leaflet-popup-photo a.leaflet-popup-close-button:hover {
+    color: #333;
+    background-color: #eee;
+}
+.leaflet-popup-photo .leaflet-popup-content-wrapper {
+    padding: 6px;
+    border-radius: 4px;
+}
+.leaflet-popup-photo .leaflet-popup-content {
+    margin: 0;
+}
+.leaflet-popup-photo .leaflet-popup-tip {
+    background: white;
+}
+.leaflet-popup-photo img,
+.leaflet-popup-photo video {
+    display: block;
+    width: 100%;
+}
+.leaflet-popup-photo p {
+    margin: 5px 0 0 0;
+}
+
+
+.slick-prev {
+    left: 10px;
+    z-index: 5;
+}
+.slick-next {
+    right: 10px;
+    z-index: 5;
+}
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background:#f9f9f9;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    width:5px;
+    background: #888;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #888;
+}

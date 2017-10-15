@@ -1,0 +1,24 @@
+
+<div id="{{stop.id}}" class="card">
+    <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
+        <div ngxSlickItem *ngFor="let media of stop.media" class="slide">
+                <img class="poster" src="{{ media.image_thumb }}" alt="">
+        </div>
+    </ngx-slick>
+    <h2>{{stop.arrival_time | date:'fullDate'}}</h2>
+    <h1>{{stop.name}}</h1>
+    <p>{{stop.description}}</p>
+    <div class="likeinfo">
+        <a href="#">Voornaam Achternaam </a><span>and 3 others like this</span>
+    </div>
+    <div class="stopactions group">
+        <div class="like">
+            <button><span class="lnr lnr-heart btnicon"></span>Like</button>
+        </div>
+        <div class="actions">
+            <button><span class="lnr lnr-pencil btnicon"></span>Edit</button>
+            <button><span class="lnr lnr-trash btnicon"></span>Delete</button>
+        </div>
+    </div>
+
+</div>

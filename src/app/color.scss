@@ -1,0 +1,149 @@
+$headercolor : #2C3E50;
+$focuscolor: #BDC3C7;
+$secondairy: #16A085;
+$placeholder : #7F8C8D;
+$contentbg: #ECF0F1;
+$red: #C0392B;
+$facebook:#4267B2;
+button{
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color:$headercolor;
+  font-weight:400;
+  padding:0px 12px;
+  background: #fff;
+  cursor:pointer;
+  line-height:28px;
+  span{
+    font-size:13px;
+    font-weight:600;
+    margin-right: 8px;
+    color:$secondairy;
+  }
+}
+.actions{
+  float:right;
+  button{
+    &:hover{
+      background:$secondairy;
+      color:#fff;
+      border:1px solid $secondairy;
+      span{
+        color:#fff;
+      }
+    }
+
+  }
+}
+.like{
+  float:left;
+  button{
+    &:hover{
+      border:1px solid $red;
+      color:$red;
+      span{
+        color:$red;
+      }
+    }
+  }
+}
+.likeinfo{
+  border-top:1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin:7px;
+  margin-top:15px;
+  padding:5px;
+  font-size:12px;
+  a{
+    color:$red;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
+.sidepanel{
+  position: fixed;
+  top: 56px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-width:240px;
+  max-width:500px;
+  z-index: 1790;
+  overflow-x: hidden;
+  overflow-y:auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  background:$contentbg;
+  color: $headercolor;
+  .hero-trip{
+    height:240px;
+    position:relative;
+    background-color: #ccc;
+    .hero-bg{
+      background-size:cover;
+      position:absolute;
+      background-position: center center;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:1;
+      -webkit-filter: blur(2px);
+      -moz-filter: blur(2px);
+      -o-filter: blur(2px);
+      -ms-filter: blur(2px);
+      filter: blur(2px);
+    }
+    .overlay{
+      background-color:rgba(0,0,0,0.3);
+      position: absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:2;
+    }
+  }
+  .add-trip{
+    margin-top:15px;
+    margin-bottom:15px;
+    text-align: center;
+    button{
+      background:none;
+      &:hover{
+        border:1px solid $red;
+        color:$red;
+        span{
+          color:$red;
+        }
+      }
+    }
+  }
+}
+.card{
+  margin:15px;
+  border-radius: 4px;
+  padding:10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: .6s ease;
+  background: #fff;
+  position:relative;
+}
+.input, .select{
+  background:0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  color: inherit;
+  font-family: inherit;
+  padding: .8em 0 10px .8em;
+  border: 1px solid #ccc;
+  outline: 0;
+  display: inline-block;
+  margin: 0 0 .8em 0;
+  padding-right: 2em;
+  width: 100%;
+  border-radius: 4px;
+  &:focus{
+    border:1px solid $secondairy;
+  }
+}

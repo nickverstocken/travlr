@@ -1,0 +1,44 @@
+<app-map #map [points]="this.stops" (stopclicked)="onMapStopClick($event)"></app-map>
+<div id="test">
+<div id="sidepanel" *ngIf="stops" class="sidepanel">
+
+  <section class="group user-profile">
+    <div id="user">
+     <a routerLink="/trips" href="#"> <img class="profilepic" src="{{stops.user.profile_image_thumb}}"
+           alt="profilepicture" class="profilepic">
+      <span>{{stops.user.first_name + ' ' + stops.user.last_name}}</span></a>
+    </div>
+    <div class="actions">
+      <button><span class="lnr lnr-users btnicon"></span>Share</button>
+      <button><span class="lnr lnr-cog btnicon"></span>Settings</button>
+    </div>
+  </section>
+  <div id="contentsection"   class="sidepanel-content">
+
+  <section class="hero-trip" >
+    <div class="hero-bg" [ngStyle]="{'background-image': 'url(' + stops.cover_photo_path + ')'}"></div>
+    <div class="overlay">
+      <h2 class="trip-title">{{stops.name}}</h2>
+      <div class="hero-date"><span>{{stops.start_date}}</span></div>
+    </div>
+  </section>
+  <section class="trip-info">
+    <ul>
+      <li><span class="lnr lnr-heart"></span><span> <span class="numberhigh">{{stops.likes}}</span> <span class="smallgrey">likes</span> </span></li>
+      <li><span class="lnr lnr-earth"></span><span><span class="numberhigh">{{stops.total_km}}</span> <span class="smallgrey">kilometers</span></span></li>
+      <li><span class="lnr lnr-map-marker"></span><span><span class="numberhigh">{{stops.stops.length}}</span> <span class="smallgrey">places</span></span></li>
+    </ul>
+  </section>
+    <section class="add-trip">
+      <button><span class="lnr lnr-plus-circle"></span>Add Step</button>
+    </section>
+  <section class="trip-stops">
+    <div in-viewport
+         [inViewportOptions]="{ rootElement: contentsection, partial: false }"
+         (inViewportAction)="action($event)" *ngFor="let stop of stops.stops" id="{{stop.id}}" #{{stop.id}}>
+      <app-tripcard id="{{stop.id}}" [stop]="stop"></app-tripcard>
+    </div>
+  </section>
+  </div>
+</div>
+</div>

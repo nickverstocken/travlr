@@ -1,0 +1,84 @@
+@import "../color";
+.sidepanel{
+
+  a{
+    color:$headercolor;
+    font-weight:600;
+  }
+  .profilepic{
+    margin-right:8px;
+    vertical-align: middle;
+    width:32px;
+    border-radius: 50%;
+  }
+  .user-profile{
+    padding:8px;
+    background:#fff;
+    box-shadow: 0px 7px 20px -9px rgba(0,0,0,0.75);
+    #user{
+      float:left;
+    }
+
+  }
+  .hero-trip{
+    .overlay{
+      h2{
+        color:#fff;
+        font-weight:600;
+        font-size:40px;
+        text-align:center;
+        margin-top:70px;
+
+      }
+      .hero-date{
+        text-align: center;
+        font-size:20px;
+        font-weight:600;
+        color:#ccc;
+      }
+    }
+  }
+  .trip-info{
+    ul{
+      display:block;
+      background:#fff;
+      color:$headercolor;
+      li{
+        display:inline-block;
+        width:32%;
+        text-align: center;
+        padding:8px 0px;
+        margin:0;
+        border:1px solid #fff;
+        .lnr{
+          font-size:25px;
+          margin-bottom:5px;
+        }
+        span{
+          display:block;
+          &.numberhigh{
+            color:$secondairy;
+            font-size:27px;
+          }
+          &.smallgrey{
+            font-size:12px;
+            color: $placeholder;
+          }
+        }
+      }
+    }
+  }
+  .sidepanel-content{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    -moz-transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    background-color: #e7eaec;
+    overflow: auto;
+    top:49px;
+  }
+}
