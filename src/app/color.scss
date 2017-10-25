@@ -5,7 +5,7 @@ $placeholder : #7F8C8D;
 $contentbg: #ECF0F1;
 $red: #C0392B;
 $facebook:#4267B2;
-button{
+button, .calltoaction{
   border: 1px solid #ccc;
   border-radius: 4px;
   color:$headercolor;
@@ -146,4 +146,7 @@ button{
   &:focus{
     border:1px solid $secondairy;
   }
+}
+a{
+  cursor:pointer;
 }

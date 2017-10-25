@@ -1,3 +1,49 @@
-<p>
-  landing works!
-</p>
+<div id="container" class="container">
+  <header class="group" id="header">
+
+    <nav class="group" id="navigation" role="navigation">
+      <ul>
+        <li>
+          <a (click)="scrollTo('#info')">What is travelr?</a>
+        </li>
+        <li>
+          <a  href="/trips/1">Who are we?</a>
+        </li>
+        <li>
+           <a (click)="scrollTo('#container')" href="#" id="logo"><img id="logoimg" src="../../assets/images/travlr.svg" alt="Travlr Logo"></a>
+        </li>
+        <li>
+          <a href="#">Contact</a>
+        </li>
+        <li>
+          <a href="#">Login</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div id="banner">
+    <div class="self-align-center">
+      <h1>TRAVELR</h1>
+      <div id="intro">
+        <p >
+          Travlr is here to help you track and share your journey in an easy and intuitive way.<br/>
+          Let the travel moments become lifetime memories.
+        </p>
+      </div>
+
+      <div>
+        <a (click)="scrollTo('#info')" class="calltoaction">Travlr, say what?!</a><a href="/login" class="calltoaction">Login</a>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <section id="info">
+      <div class="leftsplit">
+
+      </div>
+      <div class="rightsplit">
+
+      </div>
+    </section>
+  </div>
+</div>

@@ -15,6 +15,7 @@ import { Routing } from './app.routes';
 import { InViewportModule } from 'ng-in-viewport';
 import 'intersection-observer';
 import { LandingComponent } from './landing/landing.component';
+import { RouterwrapComponent } from './routerwrap/routerwrap.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { LandingComponent } from './landing/landing.component';
     TripdetailComponent,
     TripcardComponent,
     LoginComponent,
-    LandingComponent
+    LandingComponent,
+    RouterwrapComponent
   ],
   imports: [
     BrowserModule,

@@ -23,13 +23,12 @@ export class MapComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.map = L.map('map', {
+        L.mapbox.accessToken = 'pk.eyJ1Ijoibmlja3ZlcnN0b2NrZW4iLCJhIjoiY2o4cnhseHhqMDJqYzJxcXU4ZzV3ZW54ayJ9.bnPqSBV_ZuvYuM3NwTkayg';
+  /*      this.map = L.map('map', {
             maxZoom: 14
-        }).setView([51.505, -0.09], 3);
-        L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(this.map);
+        }).setView([51.505, -0.09], 3);*/
+        this.map = L.mapbox.map('map', 'mapbox.satellite')
+            .setView([20, 0], 2);
     }
 
     processPoints(data: any) {
