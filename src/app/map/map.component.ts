@@ -136,7 +136,7 @@ export class MapComponent implements OnInit {
                 'Q', midpointLatLng,
                 [latTo, lngTo]
             ], {
-                dashArray: 5, color: '#2C3E50   ',
+                dashArray: 5, color: '#fff   ',
                 weight: 2
             });
         return curvedPath;
