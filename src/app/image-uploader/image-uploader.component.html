@@ -1,0 +1,19 @@
+<label class="uploader" ondragover="return false;"
+       [class.loaded]="loaded"
+       [ngStyle]="options"
+       (dragenter)="handleDragEnter()"
+       (dragleave)="handleDragLeave()"
+       (drop)="handleDrop($event)">
+
+  <i [class]="dragging ? 'icon lnr lnr-plus-circle' : 'icon lnr lnr-picture'"></i>
+
+  <img
+          class="img"
+          [src]="imageSrc"
+          [ngStyle]="options"
+          (load)="handleImageLoad()"
+          [class.loaded]="imageLoaded"/>
+
+  <input id="fileInput" type="file" name="file" accept="image/x-png,image/jpeg"
+         (change)="handleInputChange($event)">
+</label>

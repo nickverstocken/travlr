@@ -1,0 +1,26 @@
+<div class="multipleUploadWrap">
+  <div [ngStyle]="options" *ngFor="let image of imageSrc" class="imagewrap">
+    <div (click)="removeImage(image)" [ngStyle]="options" class="innerwrap">
+<img
+     class="img"
+      [src]=image
+     [ngStyle]="options"
+     (load)="handleImageLoad()"
+     [class.loaded]="imageLoaded"/>
+    </div>
+    </div>
+<label class="uploader" ondragover="return false;"
+       [class.loaded]="loaded"
+       [ngStyle]="options"
+       (mouseenter)="mouseEnter()"
+       (mouseleave)="mouseLeave()"
+       (dragenter)="handleDragEnter()"
+       (dragleave)="handleDragLeave()"
+       (drop)="handleDrop($event)">
+
+  <i [class]="dragging ? 'icon lnr lnr-plus-circle' : 'icon lnr lnr-picture'"></i>
+
+  <input multiple id="fileInput" type="file" name="file" accept="image/x-png,image/jpeg"
+         (change)="handleInputChange($event)">
+</label>
+</div>

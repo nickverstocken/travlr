@@ -1,0 +1,89 @@
+<div class="modalContainer {{show}}">
+    <div class="modal">
+        <div class="modalHeader">
+            <div (click)="closeModal()" class="close">
+                <span class="lnr lnr-cross-circle"></span>
+            </div>
+            <h3>Add Trip</h3>
+        </div>
+    <div class="modalContent">
+        <div class="contentContainer">
+            <form id="addTripForm" name="addTripForm" #f="ngForm" (ngSubmit)="f.form.valid && (trip.id ? editTrip(trip) : addTrip())"  class="signup-form">
+            <div class="card">
+                <h4>Trip name</h4>
+                <input required name="tripname" type="text" class="input" id="tripname" placeholder="Trip name*"
+                       [(ngModel)]="trip.name" #tripname="ngModel" [class]="f.submitted && !tripname.valid ? 'input error' : 'input'"
+                       [placeholder]="f.submitted && !tripname.valid ? (tripname.errors.required ? 'Trip name is required' : 'Trip name*') : 'Trip name*'"
+                >
+            </div>
+                <div *ngIf="trip.id" class="card">
+                    <h4>Change cover photo</h4>
+                    <app-image-uploader [options]="uploaderOptions" [image]="trip.cover_photo_path" (fileload)="onLoaded($event)"></app-image-uploader>
+                </div>
+            <div class="card">
+                <h4>When?</h4>
+                <div class="inputIcon">
+                    <input [(ngModel)]="start_date" (focus)="startDate.openCalendar()" name="start_date" [options]="dateOptions" class="input" id="start_date" placeholder="Start date*"
+                           ngx-mydatepicker #startDate="ngx-mydatepicker"
+                           (dateChanged)="onStartDateChanged($event)">
+                    <span (click)="startDate.toggleCalendar()" class="centerContent lnr lnr-calendar-full"></span>
+                </div>
+                <div  *ngIf="errordate" class="help-block">
+                   <div>Startdate overlaps with one of your other trips.</div>
+                </div>
+                <div class="inputIcon">
+                <input [(ngModel)]="end_date"  (focus)="endDate.openCalendar()"  name="end_date" [options]="dateOptions" class="input" id="end_date" placeholder="End Date" ngx-mydatepicker #endDate="ngx-mydatepicker"
+                      (dateChanged)="onEndDateChanged($event)"
+                >
+                    <span (click)="endDate.toggleCalendar()" class="centerContent lnr lnr-calendar-full"></span>
+                </div>
+            </div>
+            <div class="card">
+                <h4>Privacy</h4>
+                <a id="private" (click)="setSelected($event, 'private')" class="optionSelector centerContent">
+                    <div class="optionIcon"></div>
+                    <div class="optionContent">
+                        <div class="optionTitle">
+                            Only me
+                        </div>
+                        <p class="optionText">
+                            This trip, including all details, is only visible to you.
+                        </p>
+                    </div>
+                </a>
+                <a id="followers"  (click)="setSelected($event,'followers')"  class="optionSelector centerContent">
+                    <div class="optionIcon selected"></div>
+                    <div class="optionContent">
+                        <div class="optionTitle">
+                            Followers
+                        </div>
+                        <p class="optionText">
+                            Only people who follow you will be able to see this trip.
+                        </p>
+                    </div>
+                </a>
+                <a id="public" (click)="setSelected($event,'public')" class="optionSelector centerContent">
+                    <div class="optionIcon"></div>
+                    <div class="optionContent">
+                        <div class="optionTitle">
+                            Public
+                        </div>
+                        <p class="optionText">
+                            Everyone can see this trip.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            </form>
+            <div class="actions">
+                <button *ngIf="!delete" form="addTripForm" type="submit" class="button">{{trip.id ? 'Edit trip' : 'Add trip'}}</button>
+                <button *ngIf="!delete" (click)="closeModal()" class="button cancel">Cancel</button>
+                <button class="button delete" *ngIf="trip.id && !delete" (click)="deleteTrip()"><span class="lnr lnr-trash"></span></button>
+                <div class="confirm" *ngIf="delete">Are you sure? <button (click)="confirmDelete(trip)" class="button">Yes, delete</button><button (click)="cancelDelete()" class="button cancel">No, cancel</button></div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<a class="modalBg {{show}}"></a>

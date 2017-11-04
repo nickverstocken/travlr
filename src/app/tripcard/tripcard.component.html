@@ -1,10 +1,15 @@
 
 <div id="{{stop.id}}" class="card">
-    <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
-        <div ngxSlickItem *ngFor="let media of stop.media" class="slide">
-                <img class="poster" src="{{ media.image_thumb }}" alt="">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+        <div *ngFor="let media of stop.media.data" class="swiper-slide">
+                <img class="poster" src="{{ media.image }}" alt="">
         </div>
-    </ngx-slick>
+        </div>
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
     <h2>{{stop.arrival_time | date:'fullDate'}}</h2>
     <h1>{{stop.name}}</h1>
     <p>{{stop.description}}</p>
@@ -16,7 +21,7 @@
             <button><span class="lnr lnr-heart btnicon"></span>Like</button>
         </div>
         <div class="actions">
-            <button><span class="lnr lnr-pencil btnicon"></span>Edit</button>
+            <button (click)="stopedit(stop)"><span class="lnr lnr-pencil btnicon"></span>Edit</button>
             <button><span class="lnr lnr-trash btnicon"></span>Delete</button>
         </div>
     </div>

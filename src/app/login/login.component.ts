@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HeaderComponent } from "../header/header.component"
 import {AuthService} from "../services/auth.service"
 declare var $ : any;
-interface Credentials {
-    email: string,
-    password: string
-}
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +12,9 @@ interface Credentials {
 export class LoginComponent implements OnInit {
     login: any = {};
     register: any = {};
-    registermsg: string;
+    formData: FormData;
+    registermsg = '';
+    loginmsg: string;
     countries = [
         { code: 'US', name: 'United States' },
         { code: 'GB', name: 'United Kingdom' },
@@ -267,9 +266,22 @@ export class LoginComponent implements OnInit {
         { code: 'ZM', name: 'Zambia' },
         { code: 'ZW', name: 'Zimbabwe' },
     ];
-  constructor(private auth: AuthService, private router: Router) { }
+    uploaderOptions = {width: '88px', height: '88px', 'border-radius': '50%'};
+  constructor(private auth: AuthService, private router: Router) {
+
+
+  }
 
   ngOnInit() {
+      if (this.auth.loggedIn()) {
+          this.auth.currentUser.subscribe(
+              (userData) => {
+                  if (userData.id) {
+                      this.router.navigate([userData.id + '/trips'] );
+                  }
+              }
+          );
+      }
       var tab = $('.tabs h3 a');
 
       tab.on('click', function(event) {
@@ -281,36 +293,53 @@ export class LoginComponent implements OnInit {
           $('div[id$="tab-content"]').removeClass('active');
           $(tab_content).addClass('active');
       });
+
   }
     onLogin() {
         this.auth.login(this.login).subscribe(
-            result => {
-                localStorage.setItem('token', result.data.token);
-                this.router.navigate(['/trips']);
+            data => {
+                if (data.success) {
+                    localStorage.setItem('token', data.data.token);
+                    this.auth.setAuth(data.data.user);
+                    this.router.navigate([data.data.user.id + '/trips'] );
+                }else {
+                    if (data.error) {
+                        this.loginmsg = data.error;
+                    }
+                }
             },
             error => {
-                console.log(error);
+
             }
         );
 
     }
-    onRegister(){
-        this.auth.register(this.register).subscribe(
+    onRegister() {
+      this.formData = new FormData();
+        this.formData.append('first_name', this.register.first_name);
+        this.formData.append('name', this.register.name);
+        this.formData.append('email', this.register.email);
+        this.formData.append('city', this.register.city);
+        this.formData.append('country', this.register.country);
+        this.formData.append('password', this.register.password);
+        this.formData.append('password_confirmation', this.register.password_confirmation);
+        this.formData.append('profile_image', this.register.profile_image);
+        this.auth.register(this.formData).subscribe(
             data => {
-                if(data.success){
+                this.registermsg = '';
+                if (data.success) {
                     this.registermsg = data.message;
-                }else{
-                    if(data.error['email']){
-                        this.registermsg = data.error['email'];
-                    }
-                    if(data.error['password']){
-                        this.registermsg += '<br />' + data.error['password'];
+                }else {
+                    for(var key in data.error) {
+                        this.registermsg += data.error[key] + '<br />';
                     }
                 }
-
             },
             error => {
             }
         );
+    }
+    onFileLoaded(file: File) {
+      this.register.profile_image = file;
     }
 }

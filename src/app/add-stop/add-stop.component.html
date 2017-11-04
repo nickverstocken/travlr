@@ -1,0 +1,58 @@
+<div class="modalContainer {{show}}">
+  <div class="modal">
+    <div class="modalHeader">
+      <div (click)="closeModal()" class="close">
+        <span class="lnr lnr-cross-circle"></span>
+      </div>
+      <h3>Add Trip</h3>
+    </div>
+    <div class="modalContent">
+      <div class="contentContainer">
+        <form id="addStopForm" name="addStopForm" #f="ngForm" (ngSubmit)="f.form.valid && (stop.id ? editStop(stop) : addStop())"  class="signup-form">
+          <div class="card">
+            <h4>Location</h4>
+            <input [value]="stop.location ? stop.location.name : '' " type="text" placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="input" #search>
+          </div>
+          <div class="card">
+            <h4>Stop name</h4>
+            <input required name="stopname" type="text" class="input" id="stopname" placeholder="Stop name*"
+                   [(ngModel)]="stop.name" #stopname="ngModel" [class]="f.submitted && !stopname.valid ? 'input error' : 'input'"
+                   [placeholder]="f.submitted && !stopname.valid ? (stopname.errors.required ? 'Stop name is required' : 'Stop name*') : 'Stop name*'"
+            >
+          </div>
+          <div class="card">
+            <h4>Arrival time</h4>
+            <div class="dateTime">
+              <div class="inputIcon">
+                <input [(ngModel)]="stop_date" (focus)="arrivalTime.openCalendar()" name="arrival_date" [options]="dateOptions" class="input" id="arrival_date" placeholder="Arrival date*"
+                       ngx-mydatepicker #arrivalTime="ngx-mydatepicker"
+                       (dateChanged)="onArrivalDateChanged($event)">
+                <span (click)="arrivalTime.toggleCalendar()" class="centerContent lnr lnr-calendar-full"></span>
+              </div>
+              <div class="inputIcon">
+                <input  name="arrival_time" class="input" id="arrival_time" value="{{this.stop.arrival_time |date:'HH:mm'}}" placeholder="Arrival time*">
+                <span (click)="arrivalTime.toggleCalendar()" class="centerContent lnr lnr-clock"></span>
+              </div>
+          </div>
+          </div>
+          <div class="card">
+            <h4>What have you been up to?</h4>
+            <textarea name="stopdescription" type="text" class="input textarea" id="stopdescription" placeholder="Stop description"
+                      [(ngModel)]="stop.description" #stopdescription="ngModel"></textarea>
+          </div>
+          <div *ngIf="stop.id" class="card">
+            <h4>Add some pictures</h4>
+          <app-multiple-image-uploader [images]="stop.media.data" [options]="uploaderOptions" (fileload)="filesLoaded($event)"></app-multiple-image-uploader>
+          </div>
+        </form>
+        <div class="actions">
+          <button *ngIf="!delete" form="addStopForm" type="submit" class="button">{{stop.id ? 'Edit stop' : 'Add stop'}}</button>
+          <button *ngIf="!delete" (click)="cancelStop()" class="button cancel">Cancel</button>
+          <button class="button delete" *ngIf="stop.id && !delete" (click)="deleteStop()"><span class="lnr lnr-trash"></span></button>
+          <div class="confirm" *ngIf="delete">Are you sure? <button (click)="confirmDelete(stop)" class="button">Yes, delete</button><button (click)="cancelDelete()" class="button cancel">No, cancel</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<a class="modalBg {{show}}"></a>

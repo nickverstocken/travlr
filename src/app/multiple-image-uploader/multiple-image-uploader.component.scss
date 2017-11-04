@@ -1,0 +1,108 @@
+/* File Uploader Styles  */
+@import "../color";
+.uploader input {
+  display: none;
+}
+
+.uploader {
+  background-color: #ccc;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  margin:2px;
+}
+
+
+.uploader .icon {
+  pointer-events: none;
+}
+
+.uploader,
+.uploader .icon {
+  -webkit-transition: all 100ms ease-in;
+  -moz-transition: all 100ms ease-in;
+  -ms-transition: all 100ms ease-in;
+  -o-transition: all 100ms ease-in;
+  transition: all 100ms ease-in;
+}
+
+.uploader .icon {
+  color: #fff;
+  font-size: 2.5em;
+  left: 50%;
+  top: 50%;
+  z-index:0;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+img {
+  z-index:1;
+  position: relative;
+  opacity: 0;
+  object-fit: cover;
+  -webkit-transition: all 300ms ease-in;
+  -moz-transition: all 300ms ease-in;
+  -ms-transition: all 300ms ease-in;
+  -o-transition: all 300ms ease-in;
+  transition: all 300ms ease-in;
+  cursor:pointer;
+  &:hover{
+
+  }
+}
+img[class] {
+  width: 100%;
+}
+img.loaded {
+  opacity: 1;
+}
+.imagewrap{
+  padding:2px;
+  .innerwrap{
+    position:relative;
+  }
+  &:hover{
+    .innerwrap:after{
+      content:'\e870';
+      font-family: Linearicons-Free;
+      color:#fff;
+      font-size:40px;
+      position: absolute;
+      z-index:2;
+      right:0;
+      bottom:0;
+      top:0;
+      left:0;
+      cursor:pointer;
+      background:rgba(0,0,0,0.3);
+      border-radius: 4px;
+      display: -moz-box;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      -moz-align-items: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      -moz-justify-content: center;
+      justify-content: center;
+    }
+  }
+}
+.multipleUploadWrap{
+  display:flex;
+  flex-wrap: wrap;
+  padding:5px;
+  border:1px solid #ccc;
+  border-radius:4px;
+}

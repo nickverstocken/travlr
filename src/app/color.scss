@@ -69,7 +69,7 @@ button, .calltoaction{
   width: 100%;
   min-width:240px;
   max-width:500px;
-  z-index: 1790;
+  z-index: 800;
   overflow-x: hidden;
   overflow-y:auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
@@ -121,7 +121,7 @@ button, .calltoaction{
   }
 }
 .card{
-  margin:15px;
+  margin:10px;
   border-radius: 4px;
   padding:10px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -139,18 +139,281 @@ button, .calltoaction{
   border: 1px solid #ccc;
   outline: 0;
   display: inline-block;
-  margin: 0 0 .8em 0;
+  margin: 0 0 10px 0;
   padding-right: 2em;
   width: 100%;
   border-radius: 4px;
   &:focus{
     border:1px solid $secondairy;
   }
+  &.error{
+    border:1px solid $red;
+    color:$red;
+    &::-webkit-input-placeholder{
+      color:$red;
+    }
+  }
+}
+.textarea{
+  height:150px;
 }
 a{
   cursor:pointer;
 }
 .help-block{
   color:$red;
+
   margin-bottom:15px;
 }
+
+.modalContainer{
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0;
+  -moz-transition: opacity .2s ease-in-out;
+  -o-transition: opacity .2s ease-in-out;
+  -webkit-transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out;
+  .modal{
+    position: relative;
+    width: 320px;
+    pointer-events: auto;
+
+  }
+  .modalHeader{
+    .close{
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      right: 0;
+      padding: 8px;
+      cursor: pointer;
+      font-size:20px;
+      color:#fff;
+    }
+    h3 {
+      position: relative;
+      z-index: 2;
+      background: $headercolor;
+      padding: 16px;
+      line-height: 32px;
+      font-size: 22px;
+      font-weight:600;
+      color: #fff;
+      text-align: center;
+      border-radius: 4px 4px 0 0;
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
+    }
+  }
+  .modalContent{
+    max-height: 100vh;
+    max-height: calc(90vh - 10px);
+    background: #fff;
+    position: relative;
+    overflow: auto;
+    background: #e7eaec;
+    z-index: 1;
+    border-radius: 0 0 4px 4px;
+    .contentContainer{
+      .card{
+        padding:15px;
+        h4{
+          font-weight: 700;
+          padding-bottom: 12px;
+          margin-bottom: 15px;
+          font-size: 16px;
+          border-bottom: 1px solid $contentbg;
+          color: $headercolor;
+        }
+        .input{
+          margin-bottom:0;
+        }
+      }
+      .button{
+        padding:6px;
+        border-radius:4px;
+      margin-right:10px;
+        margin-bottom:10px;
+        background-color: $secondairy;
+        border:1px solid $secondairy;
+        color: #fff;
+        cursor: pointer;
+        &:hover{
+          background:none;
+          color:$secondairy
+        }
+        &.cancel{
+          border:1px solid $red;
+          background:$red;
+          &:hover{
+            background:none;
+            color:$red;
+          }
+        }
+        &.delete{
+          background:none;
+          margin-bottom: 0px;
+          line-height: 1;
+          vertical-align: top;
+          border:1px solid $placeholder;
+          & .lnr{
+            margin-right: 0;
+            font-size:26px;
+            font-weight: 400;
+            color:$placeholder;
+
+          }
+          &:hover{
+            background:$red;
+            border:1px solid $red;
+            & .lnr{
+              color:#fff;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+.modalBg{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 899;
+  background: rgba(26,36,48,.85);
+  opacity:0;
+}
+.inputIcon{
+  position: relative;
+  margin-bottom: 10px;
+  .input{
+
+    &:focus + .lnr{
+      border-left:1px solid $secondairy;
+      background:$secondairy;
+      color:#fff;
+    }
+    &:focus + .ngxmdp + .lnr{
+      border-left:1px solid $secondairy;
+      background:$secondairy;
+      color:#fff;
+    }
+  }
+  .lnr{
+    border-radius: 0px 4px 4px 0px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 40px;
+    border:1px solid #ccc;
+    cursor:pointer;
+    background:#fff;
+    z-index: 1;
+    color: $secondairy;
+    font-size: 20px;
+  }
+}
+.optionSelector{
+  border: 1px solid #ccc;
+  padding:10px;
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 10px;
+  .optionIcon{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    border: 1px solid $placeholder;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    &:before{
+      content: '';
+      display: block;
+      position: absolute;
+      top: 2px;
+      bottom: 2px;
+      right: 2px;
+      left: 2px;
+      border-radius: 50%;
+    }
+    &.selected{
+      &:before{
+        background: $red;
+      }
+    }
+  }
+  .optionContent{
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    .optionTitle{
+      line-height: 20px;
+      vertical-align: middle;
+      color:$headercolor;
+      font-weight:600;
+    }
+    .optionText{
+      color: $placeholder;
+      font-size: 12px;
+      line-height: 17px;
+    }
+  }
+}
+.centerContent{
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+}
+.show{
+  opacity: 1;
+}
+.dateTime{
+  display:flex;
+  .inputIcon:first-child{
+    width:250px;
+    margin-right:5px;
+}
+  .inputIcon span{
+    background:#fff;
+  }
+
+}
+//calendar style{

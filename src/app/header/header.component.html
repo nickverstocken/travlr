@@ -1,18 +1,18 @@
 <header class="group" id="header">
-<a href="#" id="logo"><img id="logoimg" src="../../assets/images/travlr.svg" alt="Travlr Logo"></a>
+<a href="{{user.id}}/trips" id="logo"><img id="logoimg" src="../../assets/images/travlr.svg" alt="Travlr Logo"></a>
     <div class="search">
-        <span class="lnr lnr-magnifier iconsearch"></span>
+        <span class="lnr lnr-magnifier iconsearch centerContent"></span>
         <input class="search_input" placeholder="Search motherfucker" />
     </div>
     <nav class="group" id="navigation" role="navigation">
         <ul>
-            <li><a class="current" href="#"><img src="https://scontent.fbru1-1.fna.fbcdn.net/v/t1.0-1/p160x160/15442123_10210391059066242_4397606732235540896_n.jpg?oh=4a072354b3a7fc67fe835e261493c63d&oe=5A772917"
+            <li *ngIf="auth.loggedIn()"><a class="current" (click)="logout()"><img src="{{user.profile_image_thumb}}"
                 alt="profilepicture" class="profilepic">
-                <span>Nick</span></a></li>
-            <li>
-                <a  href="/trips/1">Discover</a>
+                <span>Logout</span></a></li>
+            <li *ngIf="auth.loggedIn()">
+                <a  href="#">Discover</a>
             </li>
-            <li>
+            <li *ngIf="auth.loggedIn()">
                 <a href="#">Friends activity</a>
             </li>
             <li>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RouterwrapComponent } from './routerwrap.component';
+import { ImageUploaderComponent } from './image-uploader.component';
 
-describe('RouterwrapComponent', () => {
-  let component: RouterwrapComponent;
-  let fixture: ComponentFixture<RouterwrapComponent>;
+describe('CoverImageUploaderComponent', () => {
+  let component: ImageUploaderComponent;
+  let fixture: ComponentFixture<ImageUploaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RouterwrapComponent ]
+      declarations: [ ImageUploaderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RouterwrapComponent);
+    fixture = TestBed.createComponent(ImageUploaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -85,15 +85,20 @@
       background:rgba(0,0,0,0.3);
       &:hover{
         background:rgba(0,0,0,0.2);
-        span{
+        .name{
           text-decoration: underline;
-          &.lnr{
-            text-decoration: none;
-          }
+        }
+        span.lnr{
+          text-decoration: none;
         }
         + .trip-bg{
           transform: scale(1.05);
         }
+      }
+      .date{
+        font-size:16px;
+        font-weight:600;
+        color:#ccc;
       }
       span.lnr{
         font-size:25px;

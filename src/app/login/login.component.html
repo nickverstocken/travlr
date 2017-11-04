@@ -9,7 +9,7 @@
         <div id="login-tab-content" class="active">
             <div *ngIf="!auth.loggedIn()">
             <input type="button" class="button facebook" value="login with facebook">
-            <div class="seperator">
+            <div class="seperator centerContent">
                 <div class="seperator-inner">or</div>
             </div>
             <form id="loginForm" name="loginForm" #f="ngForm" (ngSubmit)="f.form.valid && onLogin()" class="login-form">
@@ -27,16 +27,19 @@
                 <label for="remember_me">Remember me</label>
                 <input form="loginForm" type="submit" class="button" value="Login">
             </form>
+                <div  *ngIf="loginmsg">
+                    <div  class="help-block" [innerHTML]="loginmsg" ></div>
+                </div>
             <div class="help-text">
                 <p><a href="#">Forgot your password?</a></p>
             </div>
             </div>
             <div *ngIf="auth.loggedIn()">
-                <div class="seperator">
+                <div class="seperator centerContent">
                     <div class="seperator-inner">Login</div>
                 </div>
-                You are logged in! Don't waste your time logging in twice -_-
-                <div class="seperator">
+                You are logged in! Don't waste your time, go and explore!
+                <div class="seperator centerContent">
                     <div class="seperator-inner">Go to</div>
                 </div>
                 <button class="button">Profile</button><button routerLink="/trips" class="button">Your trips</button><button (click)="auth.logout()" class="button">Logout</button>
@@ -45,36 +48,36 @@
         <div id="signup-tab-content" >
             <div *ngIf="!auth.loggedIn()">
             <input type="button" class="button facebook" value="sign up with facebook">
-            <div class="seperator">
+            <div class="seperator centerContent">
                 <div class="seperator-inner">or</div>
             </div>
             <form id="registerForm" name="registerForm" #r="ngForm" (ngSubmit)="r.form.valid && onRegister()"  class="signup-form">
-                <input required [(ngModel)]="register.first_name" #register_first_name="ngModel" name="register_first_name" type="text" class="input" placeholder="First name*">
-                <div  *ngIf="r.submitted && !register_first_name.valid" class="help-block">
-                    <div *ngIf="register_first_name.errors.required">First name is required</div>
+                <div id="profileImageWrap">
+                    <div id="profileImage">
+                        <app-image-uploader [options]="uploaderOptions" (fileload)="onFileLoaded($event)"></app-image-uploader>
+                    </div>
+                    <div id="registerfullname">
+                        <input [class]="r.submitted && !register_first_name.valid ? 'input error' : 'input'" id="register_first_name" required [(ngModel)]="register.first_name" #register_first_name="ngModel" name="register_first_name" type="text" [placeholder]="r.submitted && !register_first_name.valid ? (register_first_name.errors.required ? 'First name is required' : 'First name') : 'First name*'">
+                        <input [class]="r.submitted && !register_name.valid ? 'input error' : 'input'" id="register_name" required [(ngModel)]="register.name" #register_name="ngModel" name="register_name" type="text" [placeholder]="r.submitted && !register_name.valid ? (register_name.errors.required ? 'Last name is required' : 'Last name') : 'Last name*'">
+                    </div>
                 </div>
-                <input required [(ngModel)]="register.name" #register_name="ngModel" name="register_name" type="text" class="input"  placeholder="Last name*">
-                <div  *ngIf="r.submitted && !register_name.valid" class="help-block">
-                    <div *ngIf="register_name.errors.required">Name is required</div>
-                </div>
-                <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$" required [(ngModel)]="register.email" #register_email="ngModel" name="register_email"  type="email" class="input" placeholder="Email*">
-                <div *ngIf="r.submitted && !register_email.valid" class="help-block">
-                    <div *ngIf="register_email.errors.required">Email is required.</div>
-                    <div *ngIf="register_email.errors.pattern">Not a valid email. </div>
+
+                <input [class]="r.submitted && !register_email.valid ? 'input error' : 'input'" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$" required [(ngModel)]="register.email" #register_email="ngModel" name="register_email"  type="email" [placeholder]="r.submitted && !register_email.valid ? (register_email.errors.required ? 'Email is required' : 'Email*') : 'Email*'">
+                <div *ngIf="r.submitted && !register_email.valid">
+                    <div class="help-block" *ngIf="register_email.errors.pattern">Not a valid email. </div>
                 </div>
                 <input [(ngModel)]="register.city" #register_city="ngModel" name="register_city" type="text" class="input" id="register_city" placeholder="City">
                 <select [(ngModel)]="register.country"  name="register_country" class="select">
                     <option selected value="">- Select country -</option>
                     <option *ngFor="let country of countries" [value]="country.name + ' (' + country.code + ')'">{{country.name}}</option>
                 </select>
-                <input required minlength="6" [(ngModel)]="register.password" #register_pass="ngModel" name="register_pass" type="password" class="input" autocomplete="off" placeholder="Password*">
-                <div  *ngIf="r.submitted && !register_pass.valid" class="help-block">
-                    <div *ngIf="register_pass.errors.required">Password is required</div>
-                    <div *ngIf="register_pass.errors.minlength">Password must be at least 6 characters long.</div>
+                <input [class]="r.submitted && !register_pass.valid ? 'input error' : 'input'" required minlength="6" [(ngModel)]="register.password" #register_pass="ngModel" name="register_pass" type="password" class="input" autocomplete="off" [placeholder]="r.submitted && !register_pass.valid? (register_pass.errors.required ? 'Password is required' : 'Password*') : 'Password*'">
+                <div  *ngIf="r.submitted && !register_pass.valid">
+                    <div class="help-block" *ngIf="register_pass.errors.minlength">Password must be at least 6 characters long.</div>
                 </div>
-                <input required [(ngModel)]="register.password_confirmation" #register_confirm_password="ngModel" name="confirm_password" type="password" class="input" autocomplete="off" placeholder="Confirm password*">
-                <div  *ngIf="r.submitted && !register_confirm_password.valid" class="help-block">
-                    <div *ngIf="register_confirm_password.errors.required">Confirm password is required</div>
+                <input [class]="r.submitted && !password_confirmation.valid ? 'input error' : 'input' " required minlength="6" [(ngModel)]="register.password_confirmation" #password_confirmation="ngModel" name="password_confirmation" type="password" class="input" autocomplete="off" [placeholder]="r.submitted && !password_confirmation.valid ? (password_confirmation.errors.required ? 'Confirm password is required' : 'Confirm password*') : 'Confirm password*'">
+                <div  *ngIf="r.submitted && !password_confirmation.valid" >
+                    <div class="help-block" *ngIf="password_confirmation.errors.minlength">Confirm password is > 6 characters.</div>
                 </div>
                 <input form="registerForm" type="submit" class="button" value="Sign Up">
             </form>
@@ -83,10 +86,10 @@
                 </div>
             </div>
             <div *ngIf="auth.loggedIn()">
-                <div class="seperator">
+                <div class="seperator centerContent">
                     <div class="seperator-inner">Login</div>
                 </div>
-                You are logged in! Don't waste your time logging in twice -_-
+                You are logged in! Don't waste your time, go and explore!
                 <div class="seperator">
                     <div class="seperator-inner">Go to</div>
                 </div>
