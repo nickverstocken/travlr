@@ -3,58 +3,119 @@
 .sidepanel {
   .user-profile {
     .hero-trip {
-      .hero-bg{
+      .hero-bg {
 
       }
       .overlay {
-    #user{
-      text-align: center;
-      .profilepic{
-        margin-right:8px;
-        vertical-align: middle;
-        width:70px;
-        border-radius: 50%;
-        margin-top:27px;
-        margin-bottom:15px;
-      }
-      span{
-        display:block;
-        color:#fff;
-        font-size:16px;
-        font-weight: 600;
-        &.grey{
-          font-weight: 400;
-          margin-top:2px;
-          color:#ccc;
-          font-size:12px;
-        }
-      }
-    }
-        .followers{
+        #user {
           text-align: center;
-          margin-top:27px;
-          button{
-            margin:0px 7px;
-            background:none;
-            color:#fff;
-            span{
-              color:#fff;
+          .profilepic {
+            margin-right: 8px;
+            vertical-align: middle;
+            width: 70px;
+            border-radius: 50%;
+            margin-top: 27px;
+            margin-bottom: 15px;
+          }
+          span {
+            display: block;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            &.grey {
+              font-weight: 400;
+              margin-top: 2px;
+              color: #ccc;
+              font-size: 12px;
             }
-            &:hover{
-              background:$placeholder;
-              border:1px solid $placeholder;
+          }
+        }
+        .followers {
+          text-align: center;
+          margin-top: 27px;
+          button {
+            margin: 0px 7px;
+            background: none;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            -webkit-transition: 0.2s;
+            -moz-transition: 0.2s;
+            -o-transition: 0.2s;
+            transition: 0.2s;
+            span {
+              color: #fff;
+            }
+            &:hover {
+              background: $placeholder;
+              border: 1px solid $placeholder;
+            }
+            &:before, &:after {
+              content: '';
+              position: absolute;
+              top: 0px;
+              left: 0;
+              width: 100%;
+              text-align: center;
+              -webkit-transition: 0.2s;
+              -moz-transition: 0.2s;
+              -o-transition: 0.2s;
+              transition: 0.2s;
+            }
+            &:before {
+              content: attr(data-hover);
+              -webkit-transform: translate(-100%, 0);
+              -moz-transform: translate(-100%, 0);
+              -ms-transform: translate(-100%, 0);
+              -o-transform: translate(-100%, 0);
+              transform: translate(-100%, 0);
+
+            }
+          }
+          button.following {
+            background: $secondairy;
+            border: 1px solid $secondairy;
+            span {
+              font-weight: 400;
+              margin:0;
+            }
+            &:hover {
+              background: $red;
+              border: 1px solid $red;
+              &:before {
+                opacity: 1;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                transform: translate(0, 0);
+              }
+              & span {
+                opacity: 0;
+                -webkit-transform: scale(0.3);
+                -moz-transform: scale(0.3);
+                -ms-transform: scale(0.3);
+                -o-transform: scale(0.3);
+                transform: scale(0.3);
+              }
+            }
+          }
+          button.follow {
+            span {
+              margin: 0;
+              font-weight: 400;
             }
           }
         }
       }
     }
   }
-  .card{
-    position:relative;
-    margin:10px;
-    min-height:216px;
+  .card {
+    position: relative;
+    margin: 10px;
+    min-height: 216px;
     overflow: hidden;
-    .trip-name{
+    .trip-name {
       cursor: pointer;
       font-size: 28px;
       line-height: 32px;
@@ -82,31 +143,31 @@
       -webkit-align-items: center;
       -moz-align-items: center;
       align-items: center;
-      background:rgba(0,0,0,0.3);
-      &:hover{
-        background:rgba(0,0,0,0.2);
-        .name{
+      background: rgba(0, 0, 0, 0.3);
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+        .name {
           text-decoration: underline;
         }
-        span.lnr{
+        span.lnr {
           text-decoration: none;
         }
-        + .trip-bg{
+        + .trip-bg {
           transform: scale(1.05);
         }
       }
-      .date{
-        font-size:16px;
-        font-weight:600;
-        color:#ccc;
+      .date {
+        font-size: 16px;
+        font-weight: 600;
+        color: #ccc;
       }
-      span.lnr{
-        font-size:25px;
+      span.lnr {
+        font-size: 25px;
         position: absolute;
-        right:24px;
+        right: 24px;
       }
     }
-    .trip-bg{
+    .trip-bg {
       position: absolute;
       top: 0;
       bottom: 0;

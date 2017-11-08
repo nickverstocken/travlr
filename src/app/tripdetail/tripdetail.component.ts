@@ -26,7 +26,8 @@ export class TripdetailComponent implements OnInit {
     showTripEdit;
     showStopEdit;
     selectedStop: Stop;
-
+    userFollowers: User[];
+    isFollower: Boolean = false;
     constructor(private travelrApi: TravlrApiService, private router: Router, private route: ActivatedRoute, private auth: AuthService) {
     }
 
@@ -49,6 +50,12 @@ export class TripdetailComponent implements OnInit {
                                             this.isUser = true;
                                         }else{
                                             this.isUser = false;
+                                            this.travelrApi.getFollowers(this.trip.user).subscribe(
+                                                result => {
+                                                    this.userFollowers = result.followers.data;
+                                                    this.isFollower = this.userFollowers.some(usr => usr.id == this.currentUser.id);
+                                                }
+                                            );
                                         }
                                     },
                                     error => {

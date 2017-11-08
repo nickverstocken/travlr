@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div id="test">
-<div id="sidepanel" *ngIf="trip && trip.public || isUser" class="sidepanel">
+<div id="sidepanel" *ngIf="trip && trip?.privacy == 'public' || isUser || (trip?.privacy == 'followers' && isFollower)" class="sidepanel">
 
   <section class="group user-profile">
     <div id="user">

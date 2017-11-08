@@ -53,4 +53,10 @@ export class TravlrApiService {
     getFollowers(user){
         return this.apiService.get('/user/' + user.id + '/getfollowers');
     }
+    unFollow(user){
+        return this.apiService.post('/user/' + user.id + '/unfollow');
+    }
+    follow(user){
+        return this.apiService.post('/user/' + user.id + '/follow');
+    }
 }

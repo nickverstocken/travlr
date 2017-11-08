@@ -19,7 +19,7 @@
         background:darken(#fff, 4%);
       }
       & > a {
-        display: block;
+
       }
       &:last-child{
         border-bottom: none;
@@ -44,7 +44,86 @@
             font-size:12px;
           }
         }
+        .followsBack{
+          button{
+            position: relative;
+            overflow:hidden;
+            -webkit-transition: 0.2s;
+            -moz-transition: 0.2s;
+            -o-transition: 0.2s;
+            transition: 0.2s;
+            color:#fff;
+            span{
+              margin:0;
+              font-weight:400;
+            }
+            &:before, &:after{
+              content: '';
+              position: absolute;
+              top: 0px;
+              left: 0;
+              width: 100%;
+              text-align: center;
+              -webkit-transition: 0.2s;
+              -moz-transition: 0.2s;
+              -o-transition: 0.2s;
+              transition: 0.2s;
+            }
+            &:before{
+              content: attr(data-hover);
+              -webkit-transform: translate(-100%,0);
+              -moz-transform: translate(-100%,0);
+              -ms-transform: translate(-100%,0);
+              -o-transform: translate(-100%,0);
+              transform: translate(-100%,0);
+
+            }
+          }
+          button.following{
+            background:$secondairy;
+            border:1px solid $secondairy;
+            span{
+              color:#fff;
+            }
+            &:hover{
+              background: $red;
+              border:1px solid $red;
+              &:before{
+                opacity: 1;
+                -webkit-transform: translate(0,0);
+                -moz-transform: translate(0,0);
+                -ms-transform: translate(0,0);
+                -o-transform: translate(0,0);
+                transform: translate(0,0);
+              }
+              & span{
+                opacity: 0;
+                -webkit-transform: scale(0.3);
+                -moz-transform: scale(0.3);
+                -ms-transform: scale(0.3);
+                -o-transform: scale(0.3);
+                transform: scale(0.3);
+              }
+            }
+          }
+          button.follow{
+            background: $red;
+            border:1px solid $red;
+            span{
+              color:#fff;
+            }
+            &:hover{
+              background:$secondairy;
+              border:1px solid $secondairy;
+            }
+          }
+        }
       }
     }
+  }
+}
+.modalContainer{
+  .modal{
+    width: 400px;
   }
 }

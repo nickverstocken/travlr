@@ -17,7 +17,7 @@
                 <div class="followers">
                     <button (click)="showFollowsModal('Followers')"><span>{{user.followers_count}}</span>Followers</button>
                     <button (click)="showFollowsModal('Following')"><span>{{user.following_count}}</span>Following</button>
-                    <button *ngIf="!isUser" >Follow</button>
+                    <button *ngIf="!isUser" (click)="isFollower ? follow(user, $event) : unfollow(user, $event)" [attr.data-hover]="isFollower ? 'Unfollow' : 'Remove'" [class]="isFollower ? 'following' : 'follow'" ><span>{{isFollower ? 'Following' : 'Follow'}}</span> </button>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
     </section>
     <section class="trips">
         <div *ngFor="let trip of trips">
-        <div class="card" *ngIf="isUser || trip.privacy == 'public'">
+        <div class="card" *ngIf="isUser || trip.privacy == 'public' || (trip.privacy == 'followers' && isFollower)">
 
             <div (click)="routing(trip)" class="trip-name">
                 <div class="content">
@@ -43,5 +43,5 @@
         </div>
     </section>
 </div>
-<app-follows-modal *ngIf="showFollows == 'show'" [user]="user" [title]="followsTitle" [show]="showFollows" (closed)="onClosedFollows()"></app-follows-modal>
+<app-follows-modal *ngIf="showFollows == 'show'" (unfollowed)="userUnfollowed($event)" (followed)="userFollowed($event)"  [isUser]="isUser" [user]="user" [title]="followsTitle" [show]="showFollows" (closed)="onClosedFollows()"></app-follows-modal>
 <app-add-trip *ngIf="show == 'show'" [show]="show" (deletedTrip)="onTripDeleted($event)" (newTrip)="onTripAdded($event)" (closed)="onClosed()" ></app-add-trip>

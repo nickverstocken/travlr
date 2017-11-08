@@ -18,6 +18,8 @@ export class UsertripsComponent implements OnInit {
   showFollows;
   followsTitle;
   show;
+  userFollowers: User[];
+  isFollower: Boolean = false;
   constructor(private router: Router, private route: ActivatedRoute, private travelrApi: TravlrApiService, private auth: AuthService) {
 
   }
@@ -38,6 +40,12 @@ export class UsertripsComponent implements OnInit {
                                       this.isUser = true;
                                   }else{
                                       this.isUser = false;
+                                      this.travelrApi.getFollowers(this.user).subscribe(
+                                        result => {
+                                            this.userFollowers = result.followers.data;
+                                            this.isFollower = this.userFollowers.some(usr => usr.id == this.currentUser.id);
+                                        }
+                                      );
                                   }
                               }
                           );
@@ -66,5 +74,17 @@ export class UsertripsComponent implements OnInit {
     }
     onTripDeleted(trip) {
         console.log('trip delete successful');
+    }
+    userUnfollowed(user){
+       this.user.following_count -= 1;
+    }
+    userFollowed(user){
+        this.user.following_count += 1;
+    }
+    follow(user){
+
+    }
+    unfollow(user){
+
     }
 }
