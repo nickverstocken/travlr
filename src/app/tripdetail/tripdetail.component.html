@@ -30,17 +30,17 @@
     </ul>
   </section>
     <section *ngIf="isUser" class="add-trip">
-      <button (click)="showStopModal()"><span class="lnr lnr-plus-circle"></span>Add Step</button>
+      <button (click)="addStop()"><span class="lnr lnr-plus-circle"></span>Add Step</button>
     </section>
   <section class="trip-stops">
     <div in-viewport
          [inViewportOptions]="{ rootElement: contentsection, partial: false }"
-         (inViewportAction)="action($event)" *ngFor="let stop of trip.stops.data" id="{{stop.id}}" #{{stop.id}}>
+         (inViewportAction)="action($event)" *ngFor="let stop of stops" id="{{stop.id}}" #{{stop.id}}>
       <app-tripcard (editStop)="editStop($event)" id="{{stop.id}}" [stop]="stop"></app-tripcard>
     </div>
   </section>
   </div>
-  <app-add-stop (imagesAdded)="onImagesAdded($event)" [stop]="selectedStop ? selectedStop : {}" (flyToAndAddMarker)="addTempMarker($event)" [tripId]="trip.id" (deleteTempMarker)="deleteTempMarker()" (newStop)="onStopAdded($event)" *ngIf="showStopEdit == 'show'" [show]="showStopEdit" (closed)="onStopModalClosed()"></app-add-stop>
+  <app-add-stop (imageDeleted)="onImageDeleted($event)" (editedStop)="onStopEdited($event)" (deletedStop)="onStopDeleted($event)" (imagesAdded)="onImagesAdded($event)" [stop]="selectedStop ? selectedStop : {}" (flyToAndMoveMarker)="moveMarker($event)" (flyToAndAddMarker)="addTempMarker($event)" [tripId]="trip.id" (deleteTempMarker)="deleteTempMarker()" (newStop)="onStopAdded($event)" *ngIf="showStopEdit == 'show'" [show]="showStopEdit" (closed)="onStopModalClosed()"></app-add-stop>
 </div>
 </div>
 <app-mapbox-map (mapLoaded)="onMapLoaded($event)" #map *ngIf="stops" [stops]="stops" (stopclicked)="onMapStopClick($event) "></app-mapbox-map>

@@ -47,6 +47,8 @@ export class TripdetailComponent implements OnInit {
                                         this.stops = data.stops.data;
                                         if (this.trip.user.id === this.currentUser.id) {
                                             this.isUser = true;
+                                        }else{
+                                            this.isUser = false;
                                         }
                                     },
                                     error => {
@@ -113,20 +115,31 @@ export class TripdetailComponent implements OnInit {
     onTripDeleted(trip) {
 
     }
-
+    onStopDeleted(stop){
+        this.map.removeMarker(stop.id);
+        this.stops = this.stops.filter(h => h !== stop);
+    }
     onTripEdited(trip) {
         this.showTripEdit = '';
     }
-
+    onStopEdited(stop){
+        this.showStopEdit = '';
+    }
     addTempMarker(event) {
         this.map.addTempMarker(event);
     }
-
+    moveMarker(event){
+       // event [106.62913040000001, -6.551775799999999, 1]
+        this.map.moveMarker(event[2], [event[0], event[1]]);
+    }
     deleteTempMarker() {
         this.map.deleteTempMarker();
         this.onStopModalClosed();
     }
-
+    addStop(){
+        this.selectedStop = null;
+        this.showStopModal();
+    }
     editStop(stop) {
         this.selectedStop = stop;
         this.showStopModal();
@@ -136,18 +149,18 @@ export class TripdetailComponent implements OnInit {
         this.map.deleteTempMarker();
         const previousStop = this.stops[this.stops.length - 1];
         this.stops.push(stop);
-        this.map.addMarker(stop.id, null, [stop.location.lng, stop.location.lat]);
         if (previousStop) {
-            this.map.addLine(stop.name + stop.id, [Number(previousStop.location.lng), Number(previousStop.location.lat)], [Number(stop.location.lng), Number(stop.location.lat)]);
+            this.map.addLine(stop.id, [Number(previousStop.location.lng), Number(previousStop.location.lat)], [Number(stop.location.lng), Number(stop.location.lat)]);
         }
+        this.map.addMarker(stop.id, null, [Number(stop.location.lng), Number(stop.location.lat)]);
         this.trip.total_km = Math.round(this.map.getTotalDistance()).toString();
         //this.onStopModalClosed();
     }
     onImagesAdded(stop){
-        this.map.updateMarker(stop.id, stop.media.data[0].image_thumb);
+        this.map.updateMarker(stop);
     }
-    testfn(){
-        this.map.updateMarker(68, null);
+    onImageDeleted(stop){
+        this.map.updateMarker(stop);
     }
     onMapLoaded(bool) {
         if (bool) {

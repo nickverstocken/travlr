@@ -1,14 +1,25 @@
 <div class="modalContainer {{show}}">
   <div class="modal">
-    <div class="modalHeader">
+
+    <div class="modalHeader {{loading? 'busy' : '' }}">
       <div (click)="closeModal()" class="close">
         <span class="lnr lnr-cross-circle"></span>
       </div>
       <h3>Add Trip</h3>
     </div>
+    <a *ngIf="loading" class="loadingwrap">
+      <div class="loadingwrapInner">
+      <div class="loadingInner">
+        <div class="loading"></div>
+      </div>
+    <div class="loadingtext">
+      {{loadingStatus}}
+    </div>
+      </div>
+    </a>
     <div class="modalContent">
       <div class="contentContainer">
-        <form id="addStopForm" name="addStopForm" #f="ngForm" (ngSubmit)="f.form.valid && (stop.id ? editStop(stop) : addStop())"  class="signup-form">
+        <form id="addStopForm" name="addStopForm" #f="ngForm" (ngSubmit)="f.form.valid && (stop.id ? editStop() : addStop())"  class="signup-form">
           <div class="card">
             <h4>Location</h4>
             <input [value]="stop.location ? stop.location.name : '' " type="text" placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="input" #search>
@@ -42,7 +53,7 @@
           </div>
           <div *ngIf="stop.id" class="card">
             <h4>Add some pictures</h4>
-          <app-multiple-image-uploader [images]="stop.media.data" [options]="uploaderOptions" (fileload)="filesLoaded($event)"></app-multiple-image-uploader>
+          <app-multiple-image-uploader (removeFile)="onRemovefile($event)" [images]="stop.media.data" [options]="uploaderOptions" (fileload)="filesLoaded($event)"></app-multiple-image-uploader>
           </div>
         </form>
         <div class="actions">

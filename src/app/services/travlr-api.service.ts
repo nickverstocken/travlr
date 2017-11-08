@@ -38,7 +38,19 @@ export class TravlrApiService {
       //trips/1/stops
         return this.apiService.post('/trips/' + tripid + '/stops', stop);
     }
+    editStop(stopid, fields){
+      return this.apiService.post('/stop/' + stopid, fields);
+    }
+    deleteStop(stop) {
+        return this.apiService.delete('/stop/' + stop.id);
+    }
     uploadStopImages(stop, files): Observable<any> {
        return this.apiService.upload('/stop/' + stop.id + '/saveImages', files);
+    }
+    deleteMedia(media){
+        return this.apiService.delete('/media/' + media.id);
+    }
+    getFollowers(user){
+        return this.apiService.get('/user/' + user.id + '/getfollowers');
     }
 }

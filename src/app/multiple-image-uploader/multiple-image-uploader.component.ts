@@ -11,6 +11,7 @@ export class MultipleImageUploaderComponent implements OnInit {
     loaded = false;
     imageLoaded = false;
     @Output() fileload: EventEmitter<any> = new EventEmitter();
+    @Output() removeFile: EventEmitter<any> = new EventEmitter();
     @Input() images = [];
     imageSrc = [];
     @Input() options = {};
@@ -35,7 +36,6 @@ export class MultipleImageUploaderComponent implements OnInit {
     handleDrop(e) {
         e.preventDefault();
         this.dragging = false;
-        console.log(e.dataTransfer.files);
        this.handleInputChange(e);
     }
 
@@ -43,6 +43,7 @@ export class MultipleImageUploaderComponent implements OnInit {
         this.imageLoaded = true;
     }
     removeImage(image){
+      this.removeFile.emit(image);
         this.imageSrc = this.imageSrc.filter(item => item !== image);
     }
     handleInputChange(e) {
@@ -62,9 +63,8 @@ export class MultipleImageUploaderComponent implements OnInit {
                 this.imageSrc.push(reader.result);
                 this.loadCount += 1;
                 if(this.loadCount !== length){
-                    console.log(this.loadCount);
+                   // console.log(this.loadCount);
                 }else{
-                    console.log(files);
                     this.fileload.emit(files);
                 }
             }

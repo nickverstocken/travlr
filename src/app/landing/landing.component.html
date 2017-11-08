@@ -7,16 +7,16 @@
           <a (click)="scrollTo('#info')">What is travelr?</a>
         </li>
         <li>
-          <a  href="#">Who are we?</a>
+          <a  href="/trips/1">Who are we?</a>
         </li>
         <li>
-           <a (click)="scrollTo('#container')" href="#" id="logo"><img id="logoimg" src="../../assets/images/travlr.svg" alt="Travlr Logo"></a>
+          <a (click)="scrollTo('#container')" href="#" id="logo"><img id="logoimg" src="../../assets/images/travlr.svg" alt="Travlr Logo"></a>
         </li>
         <li>
-          <a href="#">Contact</a>
+          <a (click)="scrollTo('#contact')" href="#">Contact</a>
         </li>
         <li>
-          <a href="/login">Login</a>
+          <a href="#">Login</a>
         </li>
       </ul>
     </nav>
@@ -26,24 +26,63 @@
       <h1>TRAVELR</h1>
       <div id="intro">
         <p >
-          Travlr is here to help you track and share your journey in an easy and intuitive way.<br/>
+          Travelr is here to help you track and share your journey in an easy and intuitive way.<br/>
           Let the travel moments become lifetime memories.
         </p>
       </div>
 
       <div>
-        <a (click)="scrollTo('#info')" class="calltoaction">Travlr, say what?!</a><a href="/login" class="calltoaction">Login</a>
+        <a (click)="scrollTo('#info')" class="calltoaction">Travelr, say what?!</a><a href="/login" class="calltoaction">Login</a>
       </div>
     </div>
   </div>
   <div id="content">
     <section id="info">
+
       <div class="leftsplit">
 
       </div>
       <div class="rightsplit">
+        <!--
+                <p>Travelr is an app that helps you to make a personal blog of your vacation so your friends and family can watch the nicest and funniest spots you visited. You can add different pictures of different places to your own map. You can put a description to each picture if you want and your friends are able to like or comment your picture.</p>
+
+                <p>Log in, and make sure nobody misses anything about your lovely vacation!</p>-->
+
+        <!--<a href="/login" class="calltoaction">Let's start</a>-->
+      </div>
+
+      <!--<video controls autoplay width="100%" height="100%" src="../../assets/images/mapscreen.mov"></video>-->
+    </section>
+  </div>
+
+  <div id="content2">
+    <section id="contact">
+      <div class="form">
+
+        <form role="form" id="contact_form" action="" method="POST">
+          <div>
+            <label for="name">Naam *</label>
+            <input type="text" name="name" id="name">
+          </div>
+
+          <div>
+            <label for="email">E-mail *</label>
+            <input type="text" name="email" id="email">
+          </div>
+
+          <div>
+            <label for="bericht">Bericht *</label>
+            <textarea name="bericht" id="bericht" rows="5"></textarea>
+          </div>
+
+          <div>
+            <button type="submit" name="submit" class="calltoaction">Verzenden</button>
+          </div>
+        </form>
 
       </div>
     </section>
   </div>
+
+
 </div>

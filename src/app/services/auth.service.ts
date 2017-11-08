@@ -10,8 +10,6 @@ import { User } from '../Models/User';
 import 'rxjs/add/operator/distinctUntilChanged';
 @Injectable()
 export class AuthService {
-    baseUrl = 'http://127.0.0.1:8000/api/v1';
-    headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     private currentUserSubject = new BehaviorSubject<User>(new User());
     public currentUser = this.currentUserSubject.asObservable().distinctUntilChanged();
 

@@ -9,7 +9,9 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: ':userid/trips', component: UsertripsComponent, canActivate: [AuthGuard]},
     {path: ':userid/trips/:tripid', component: TripdetailComponent, canActivate: [AuthGuard]},
-    {path: 'landing', component: LandingComponent}
+    {path: 'landing', component: LandingComponent},
+
+    {path: '**', redirectTo: '/login'}
 ];
 
 export const Routing = RouterModule.forRoot(routes);

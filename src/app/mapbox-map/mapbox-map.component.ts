@@ -1,4 +1,5 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation} from '@angular/core';
+import { DatePipe } from '@angular/common';
 import * as mapboxgl from 'mapbox-gl';
 import * as turf from 'turf';
 import {environment} from '../../environments/environment';
@@ -8,26 +9,32 @@ declare var $: any;
 @Component({
     selector: 'app-mapbox-map',
     templateUrl: './mapbox-map.component.html',
-    styleUrls: ['./mapbox-map.component.scss']
+    styleUrls: ['./mapbox-map.component.scss'],
+    providers : [DatePipe],
+    encapsulation: ViewEncapsulation.None,
 })
 export class MapboxMapComponent implements OnInit {
     map: mapboxgl.Map;
-    style2 = 'mapbox://styles/nickverstocken/cj8xhikuq9u5k2rqungpomm2f';
-    style = 'mapbox://styles/mapbox/bright-v9'
+    style = 'mapbox://styles/nickverstocken/cj8xhikuq9u5k2rqungpomm2f';
+    style2 = 'mapbox://styles/mapbox/bright-v9'
     lat = 0;
     lng = 0;
     coordinates = [];
     @Input() stops: Stop[];
     @Output() mapLoaded: EventEmitter<any> = new EventEmitter();
     @Output() stopclicked: EventEmitter<any> = new EventEmitter();
-    midPoint;
     totalDistance = 0;
+    midPoint;
     previousCoordinates;
     lines = {
         "type": "FeatureCollection",
         "features": []
     };
-    constructor() {
+    labels = {
+        "type": "FeatureCollection",
+        "features": []
+    };
+    constructor(private datePipe: DatePipe) {
         mapboxgl.accessToken = environment.mapbox.accessToken
     }
 
@@ -45,6 +52,10 @@ export class MapboxMapComponent implements OnInit {
                     type: 'geojson',
                     data: this.lines
                 });
+                this.map.addSource('labels', {
+                    type: 'geojson',
+                    data: this.labels
+                });
                 this.map.addLayer({
                     'id': 'lines',
                     'type': 'line',
@@ -54,9 +65,26 @@ export class MapboxMapComponent implements OnInit {
                         'line-cap': 'round'
                     },
                     'paint': {
-                        'line-color': 'gray',
+                        'line-color': '#2C3E50',
                         'line-width': 1,
                         'line-dasharray': [3, 5],
+                    },
+                });
+                this.map.addLayer({
+                    "id": "labels",
+                    "type": "symbol",
+                    "source": "labels",
+                    "layout": {
+                        "text-font": ["Open Sans Regular"],
+                        "text-field": '{title}', // part 2 of this is how to do it
+                        "text-size": 10,
+
+                        "text-offset": [0.6, -0.6],
+                    },
+                    "paint": {
+                        "text-color": "#2C3E50",
+                        "text-halo-color": "#fff",
+                        "text-halo-width": 1
                     }
                 });
                 this.createStops(this.stops);
@@ -65,7 +93,7 @@ export class MapboxMapComponent implements OnInit {
                 }, new mapboxgl.LngLatBounds(this.coordinates[0], this.coordinates[0]));
                 if(bounds._ne){
                     this.map.fitBounds(bounds, {
-                        padding: 50
+                        padding: 50,
                     });
                 }
             this.mapLoaded.emit(true);
@@ -80,24 +108,26 @@ export class MapboxMapComponent implements OnInit {
             let lat, lng;
             lat = stops[i].location.lat;
             lng = stops[i].location.lng;
-            this.coordinates.push([lng, lat]);
-            this.addMarker(stops[i].id, media[0] , [lng, lat]);
+            this.addMarker(stops[i].id, media[0] , [Number(lng), Number(lat)], media.length, stops[i]);
             if (this.previousCoordinates) {
-                this.addLine(stops[i].name + stops[i].id, this.previousCoordinates, [lng, lat]);
+                this.addLine(stops[i].id, this.previousCoordinates, [lng, lat]);
             }
             this.previousCoordinates = [lng, lat];
         }
+        this.map.getSource('labels').setData(this.labels);
+        this.map.getSource('lines').setData(this.lines);
     }
 
-
-    createMarker(stopid, image, lnglat) {
+    createMarker(stopid, image, lnglat, imageCount?) {
         const el = document.createElement('div');
         el.className = 'marker';
         if (image) {
-            el.style.backgroundImage = 'url(' + image.image + ')';
+
+            el.style.backgroundImage = 'url(' + image.image_thumb + ')';
             el.style.width = 30 + 'px';
             el.style.height = 30 + 'px';
         } else {
+            el.className += ' no-image';
             el.style.backgroundColor = '#2C3E50';
             el.style.width = 15 + 'px';
             el.style.height = 15 + 'px';
@@ -105,6 +135,9 @@ export class MapboxMapComponent implements OnInit {
         el.id = stopid;
         el.style.backgroundSize = 'cover';
         el.style.backgroundRepeat = 'no-repeat';
+        if(imageCount){
+            el.setAttribute('data-imgTotal', imageCount);
+        }
 
         el.setAttribute('data-stopid', stopid);
         el.setAttribute('lat', lnglat[1]);
@@ -116,19 +149,92 @@ export class MapboxMapComponent implements OnInit {
         });
         return el;
     }
-    updateMarker(stopid, image){
-        let el = $('.marker[data-stopid=' + stopid + ']');
-        $(el).width(30);
-        $(el).height(30);
-        $(el).css('background-image', 'url(' + image + ')')
+    createPopup(stop){
+        const el = document.createElement('div');
+        el.className = 'popup';
+        if(stop.media.data.length > 0){
+            el.innerHTML = '<div class="images"><img class="poster" src="' + stop.media.data[0].image + '" /></div>';
+        }
+        el.setAttribute('data-stopid', stop.id);
+        el.innerHTML +=
+            '<div class="content-wrap"><div class="title"><h1>' + stop.name + '</h1></div>' +
+            '<div class="arrival-time">' + this.datePipe.transform(stop.arrival_time, 'fullDate') + '</div>' +
+            '<div class="title"><h2>' + stop.location.name + '</h2></div></div>';
+
+        return new mapboxgl.Popup()
+            .setHTML(el.innerHTML);
+    }
+    updateMarker(stop){
+        let el = $('.marker[data-stopid=' + stop.id + ']');
+        if(stop.media.data[0]){
+            el[0].className = 'marker';
+            $(el).width(30);
+            $(el).height(30);
+            $(el).css('background-image', 'url(' + stop.media.data[0].image_thumb + ')');
+            el[0].setAttribute('data-imgTotal', stop.media.data.length);
+        }else{
+            el[0].className += ' no-image';
+            el[0].style.backgroundColor = '#2C3E50';
+            $(el).css('background-image', 'none');
+            $(el).width(15);
+            $(el).height(15);
+            el[0].setAttribute('data-imgTotal', 0);
+        }
 
     }
-    addMarker(stopid, image, lnglat) {
-        new mapboxgl.Marker(this.createMarker(stopid, image, lnglat))
+    addMarker(stopid, image, lnglat, imgCount?, stop?) {
+        this.coordinates[stopid] = lnglat;
+        if(stop){
+            var popup = this.createPopup(stop);
+        }
+        new mapboxgl.Marker(this.createMarker(stopid, image, lnglat, imgCount))
             .setLngLat(lnglat)
+            .setPopup(popup)
             .addTo(this.map);
+        this.map.getSource('labels').setData(this.labels);
+        this.map.getSource('lines').setData(this.lines);
     }
-
+    removeMarker(stopid){
+        let el = $('.marker[data-stopid=' + stopid + ']');
+        $('.marker[data-stopid=' + stopid + ']').remove();
+        this.coordinates.splice(stopid, 1);
+        this.redrawLines();
+    }
+    moveMarker(stop, lnglat){
+        let el = $('.marker[data-stopid=' + stop.id + ']');
+        $('.marker[data-stopid=' + stop.id + ']').remove();
+        var popup = this.createPopup(stop);
+        el[0].setAttribute('lat', lnglat[1]);
+        el[0].setAttribute('lng', lnglat[0]);
+        this.coordinates[stop.id] = lnglat;
+        new mapboxgl.Marker(el[0])
+            .setLngLat(lnglat)
+            .setPopup(popup)
+            .addTo(this.map);
+        this.redrawLines();
+        this.flyTo(lnglat, 9);
+    }
+    redrawLines(){
+        this.lines = {
+            "type": "FeatureCollection",
+            "features": []
+        };
+        this.labels = {
+            "type": "FeatureCollection",
+            "features": []
+        };
+        this.previousCoordinates = null;
+        Object.entries(this.coordinates).forEach(
+            ([key, value]) => {
+                if(this.previousCoordinates){
+                    this.addLine(key, this.previousCoordinates, value);
+                }
+                this.previousCoordinates = value;
+            }
+        );
+        this.map.getSource('lines').setData(this.lines);
+        this.map.getSource('labels').setData(this.labels);
+    }
     flyTo(coordinates: Object, zoom: number) {
 
         setTimeout(() => {
@@ -136,7 +242,7 @@ export class MapboxMapComponent implements OnInit {
         }, 100);
     }
 
-    addLine(name, origin: number[], destination: number[]) {
+    addLine(stopid, origin: number[], destination: number[]) {
         const from = turf.point(origin);
         const to = turf.point(destination);
         const midpoint = turf.midpoint(from, to);
@@ -145,9 +251,12 @@ export class MapboxMapComponent implements OnInit {
         this.totalDistance += lineDistance;
         let angle = 10;
         const new_point = this.getPerpendicularPoint(midpoint.geometry.coordinates, origin, angle);
+        this.midPoint = turf.point(new_point);
+        this.midPoint.properties.title = parseFloat(lineDistance).toFixed(1) + ' km';
+        this.labels.features.push(this.midPoint);
         const curved = this.getCurvedLine(origin, new_point, destination);
         this.lines.features.push(curved);
-        this.map.getSource('lines').setData(this.lines);
+
     }
     getTotalDistance(){
         return this.totalDistance;
@@ -179,20 +288,10 @@ export class MapboxMapComponent implements OnInit {
                     origin,
                     mid_point,
                     destination
-                ]
-            }
+                ],
+            },
+            'properties': {}
         };
-/*        this.midPoint = {
-            'type': 'FeatureCollection',
-            'features': [{
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': mid_point
-                }
-            }]
-        };*/
-
         return turf.bezier(line, 20000, 1);
     }
     onscrolledToNewStop(visiblestop){

@@ -25,6 +25,7 @@ import { AddStopComponent } from './add-stop/add-stop.component';
 import { AgmCoreModule } from '@agm/core';
 import { MapboxMapComponent } from './mapbox-map/mapbox-map.component';
 import { MultipleImageUploaderComponent } from './multiple-image-uploader/multiple-image-uploader.component';
+import { FollowsModalComponent } from './follows-modal/follows-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,8 @@ import { MultipleImageUploaderComponent } from './multiple-image-uploader/multip
     ImageUploaderComponent,
     AddStopComponent,
     MapboxMapComponent,
-    MultipleImageUploaderComponent
+    MultipleImageUploaderComponent,
+    FollowsModalComponent
   ],
   imports: [
     BrowserModule,

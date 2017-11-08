@@ -15,7 +15,8 @@ export class UsertripsComponent implements OnInit {
   trips: Trip[];
   user: User;
   currentUser: User;
-
+  showFollows;
+  followsTitle;
   show;
   constructor(private router: Router, private route: ActivatedRoute, private travelrApi: TravlrApiService, private auth: AuthService) {
 
@@ -35,6 +36,8 @@ export class UsertripsComponent implements OnInit {
                                   this.currentUser = userData;
                                   if (this.user.id === this.currentUser.id) {
                                       this.isUser = true;
+                                  }else{
+                                      this.isUser = false;
                                   }
                               }
                           );
@@ -44,8 +47,14 @@ export class UsertripsComponent implements OnInit {
     routing(trip: Trip){
         this.router.navigate([trip.user_id + '/trips/' + trip.id]);
     }
+    showFollowsModal(action: string){
+        this.followsTitle = action;
+        this.showFollows = 'show';
+    }
+    onClosedFollows(){
+        this.showFollows = '';
+    }
     showModal(action: string) {
-        console.log(action);
         this.show = 'show';
     }
     onClosed() {

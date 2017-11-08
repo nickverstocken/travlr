@@ -14,12 +14,10 @@
                     <span>{{user.first_name}} {{user.last_name}}</span>
                     <span class="grey">{{user.country}}, {{user.city}}</span>
                 </div>
-                <div *ngIf="isUser" class="followers">
-                    <button><span>20</span>Followers</button>
-                    <button><span>10</span>Following</button>
-                </div>
-                <div *ngIf="!isUser" class="followers">
-                    <button>Follow</button>
+                <div class="followers">
+                    <button (click)="showFollowsModal('Followers')"><span>{{user.followers_count}}</span>Followers</button>
+                    <button (click)="showFollowsModal('Following')"><span>{{user.following_count}}</span>Following</button>
+                    <button *ngIf="!isUser" >Follow</button>
                 </div>
             </div>
         </div>
@@ -45,5 +43,5 @@
         </div>
     </section>
 </div>
-
+<app-follows-modal *ngIf="showFollows == 'show'" [user]="user" [title]="followsTitle" [show]="showFollows" (closed)="onClosedFollows()"></app-follows-modal>
 <app-add-trip *ngIf="show == 'show'" [show]="show" (deletedTrip)="onTripDeleted($event)" (newTrip)="onTripAdded($event)" (closed)="onClosed()" ></app-add-trip>

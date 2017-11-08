@@ -1,0 +1,50 @@
+@import "../color";
+
+.card-listContainer{
+
+  .card-list{
+    margin: 10px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: .6s ease;
+    background: #fff;
+    position: relative;
+    .card-list-item{
+      display: block;
+      padding: 24px;
+      background:#fff;
+      border-bottom: 1px solid #ccc;
+      &:hover{
+        background:darken(#fff, 4%);
+      }
+      & > a {
+        display: block;
+      }
+      &:last-child{
+        border-bottom: none;
+      }
+      .user{
+
+        .profilepic{
+          margin-right:12px;
+          vertical-align: middle;
+          width:40px;
+          border-radius: 50%;
+        }
+        .userInfo{
+          flex:1;
+          .name{
+            color:$headercolor;
+            font-weight: 700;
+            font-size: 16px;
+          }
+          .location{
+            color: $placeholder;
+            font-size:12px;
+          }
+        }
+      }
+    }
+  }
+}

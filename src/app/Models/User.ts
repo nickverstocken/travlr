@@ -15,6 +15,8 @@ export class User {
     profile_image: string;
     profile_image_cover: string;
     profile_image_thumb: string;
+    followers_count: number;
+    following_count: number;
     role: string;
     trips: Trip[];
 }
