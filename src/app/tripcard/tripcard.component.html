@@ -14,11 +14,12 @@
     <h1>{{stop.name}}</h1>
     <p>{{stop.description}}</p>
     <div class="likeinfo">
-        <a href="#">Voornaam Achternaam </a><span>and 3 others like this</span>
+        <span *ngIf="stop.like_count == 0">No likes yet, be the first!</span>
+       <span *ngIf="stop.like_count > 0" ><a  href="#">{{isLiked()}}</a><span>and 3 others like this</span></span>
     </div>
     <div class="stopactions group">
         <div class="like">
-            <button><span class="lnr lnr-heart btnicon"></span>Like</button>
+            <button><span class="lnr lnr-heart btnicon"></span></button>
         </div>
         <div class="actions">
             <button (click)="stopedit(stop)"><span class="lnr lnr-pencil btnicon"></span>Edit</button>

@@ -36,7 +36,7 @@
     <div in-viewport
          [inViewportOptions]="{ rootElement: contentsection, partial: false }"
          (inViewportAction)="action($event)" *ngFor="let stop of stops" id="{{stop.id}}" #{{stop.id}}>
-      <app-tripcard (editStop)="editStop($event)" id="{{stop.id}}" [stop]="stop"></app-tripcard>
+      <app-tripcard [currentUser]="currentUser" (editStop)="editStop($event)" id="{{stop.id}}" [stop]="stop"></app-tripcard>
     </div>
   </section>
   </div>

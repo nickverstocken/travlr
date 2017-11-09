@@ -81,10 +81,23 @@ export class UsertripsComponent implements OnInit {
     userFollowed(user){
         this.user.following_count += 1;
     }
-    follow(user){
-
+    follow(user, event){
+        event.stopPropagation();
+        this.travelrApi.follow(user).subscribe(
+            (result) => {
+                this.userFollowers.push(user);
+                this.user.followers_count +=1;
+                this.isFollower = true;
+            }
+        );
     }
     unfollow(user){
-
+        this.travelrApi.unFollow(user).subscribe(
+            (result) => {
+                this.userFollowers = this.userFollowers.filter(usr => usr.id !== user.id);
+                this.user.followers_count -=1;
+                this.isFollower = false;
+            }
+        );
     }
 }

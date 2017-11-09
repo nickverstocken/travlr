@@ -26,7 +26,7 @@
                   <div *ngIf="user.city || user.country" class="location">{{user.city ? user.city : ' '}}, {{user.country ? user.country : ' '}}</div>
                 </div>
                 <div class="followsBack">
-                  <button (click)="checkIfFollowBack(user) ? follow(user, $event) : unfollow(user, $event)" [attr.data-hover]="checkIfFollowBack(user) ? 'Unfollow' : 'Remove'" [class]="checkIfFollowBack(user) ? 'following' : 'follow'" *ngIf="isUser"><span>{{checkIfFollowBack(user) ? 'Following' : 'Follow'}}</span> </button>
+                  <button (click)="checkIfFollowBack(user) ? unfollow(user, $event) : follow(user, $event)" [attr.data-hover]="checkIfFollowBack(user) ? 'Unfollow' : 'Remove'" [class]="checkIfFollowBack(user) ? 'following' : 'follow'" *ngIf="isUser"><span>{{checkIfFollowBack(user) ? 'Following' : 'Follow'}}</span> </button>
                 </div>
               </div>
             </a>

@@ -17,7 +17,7 @@
                 <div class="followers">
                     <button (click)="showFollowsModal('Followers')"><span>{{user.followers_count}}</span>Followers</button>
                     <button (click)="showFollowsModal('Following')"><span>{{user.following_count}}</span>Following</button>
-                    <button *ngIf="!isUser" (click)="isFollower ? follow(user, $event) : unfollow(user, $event)" [attr.data-hover]="isFollower ? 'Unfollow' : 'Remove'" [class]="isFollower ? 'following' : 'follow'" ><span>{{isFollower ? 'Following' : 'Follow'}}</span> </button>
+                    <button *ngIf="!isUser" (click)="isFollower ? unfollow(user, $event) : follow(user, $event)" [attr.data-hover]="isFollower ? 'Unfollow' : 'Remove'" [class]="isFollower ? 'following' : 'follow'" ><span>{{isFollower ? 'Following' : 'Follow'}}</span> </button>
                 </div>
             </div>
         </div>

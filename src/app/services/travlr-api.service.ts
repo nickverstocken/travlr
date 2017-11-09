@@ -19,7 +19,7 @@ export class TravlrApiService {
             .map(result => result.data);
     }
     getTrip(id): Observable<any> {
-        return this.apiService.get(`${'/trips/' + id + '?include=user,stops.media'}`)
+        return this.apiService.get(`${'/trips/' + id + '?include=user,stops.media,stops.likes'}`)
             .map(result => result.trip);
     }
     addTrip(trip) {
@@ -58,5 +58,11 @@ export class TravlrApiService {
     }
     follow(user){
         return this.apiService.post('/user/' + user.id + '/follow');
+    }
+    getUsers(search){
+        return this.apiService.get('/users?search=' + search);
+    }
+    likeStop(stop){
+        return this.apiService.post('/stop/like/' + stop.id);
     }
 }

@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
     formData: FormData;
     registermsg = '';
     loginmsg: string;
+    loading = false;
+    loadingStatus = '';
     countries = [
         { code: 'US', name: 'United States' },
         { code: 'GB', name: 'United Kingdom' },
@@ -324,11 +326,14 @@ export class LoginComponent implements OnInit {
         this.formData.append('password', this.register.password);
         this.formData.append('password_confirmation', this.register.password_confirmation);
         this.formData.append('profile_image', this.register.profile_image);
+        this.loading = true;
+        this.loadingStatus = 'Just a minute,  ' + this.register.first_name + ', we are creating you user account!'
         this.auth.register(this.formData).subscribe(
             data => {
                 this.registermsg = '';
                 if (data.success) {
                     this.registermsg = data.message;
+                    this.register =  {};
                 }else {
                     for(var key in data.error) {
                         this.registermsg += data.error[key] + '<br />';
@@ -336,6 +341,10 @@ export class LoginComponent implements OnInit {
                 }
             },
             error => {
+            },
+            () => {
+                this.loading = false;
+                this.loadingStatus = '';
             }
         );
     }

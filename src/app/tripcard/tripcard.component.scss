@@ -2,7 +2,7 @@
 $color-shadow:transparentize(#303336, .9);
 h1 {
   font-size:25px;
-  color: $red;
+  color: $secondairy;
   letter-spacing: 2px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -14,7 +14,7 @@ h1 {
     content: '';
     width: 15%;
     height: 1px;
-    border-bottom: 1px solid $red;
+    border-bottom: 1px solid $secondairy;
     bottom: -10px;
     left: 50%;
     margin-left: -7.5%;

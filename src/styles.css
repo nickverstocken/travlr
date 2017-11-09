@@ -199,7 +199,7 @@ a {
 }
 .mapboxgl-popup-content .title h1{
     font-size: 15px;
-    color: #C0392B;
+    color: #E91E63;
     letter-spacing: 2px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -441,7 +441,7 @@ a {
 .busy{
     pointer-events: none;
 }
-.loadingwrap + *, .loadingwrap *{
+.loadingwrap + *, .loadingwrap *, .loadingwrap + * + *{
     pointer-events: none;
 }
 .loadingwrapinner{

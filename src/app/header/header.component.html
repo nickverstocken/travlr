@@ -1,8 +1,8 @@
 <header class="group" id="header">
 <a [routerLink]="[ user.id + '/trips']" id="logo"><img id="logoimg" src="../../assets/images/travlr.svg" alt="Travlr Logo"></a>
-    <div class="search">
+    <div *ngIf="auth.loggedIn()" class="search">
         <span class="lnr lnr-magnifier iconsearch centerContent"></span>
-        <input class="search_input" placeholder="Search motherfucker" />
+        <input  #search class="search_input" (focus)="focusSearch()" placeholder="Search for a friend..."  [ngModel]="searchvalue" (ngModelChange)="searchUser($event)"/>
     </div>
     <nav class="group" id="navigation" role="navigation">
         <ul>
@@ -21,3 +21,32 @@
         </ul>
     </nav>
 </header>
+<div #suggestions>
+    <div *ngIf="searchvalue" class="suggestions">
+    <div class="card-listContainer">
+        <ul class="card-list">
+            <li class="card-list-item" *ngIf="!users">
+                <div class="user centerContent">
+                    No users found!
+                </div>
+            </li>
+            <li *ngFor="let user of users" class="card-list-item">
+                <a (click)="redirect(user)" >
+                    <div class="user centerContent">
+                        <div class="profileImg">
+                            <img _ngcontent-c2="" alt="profilepicture" class="profilepic" src="{{user.profile_image_thumb}}">
+                        </div>
+                        <div class="userInfo">
+                            <div class="name">{{user.first_name + ' ' + user.last_name }}</div>
+                            <div *ngIf="user.city || user.country" class="location">{{user.city ? user.city : ' '}}, {{user.country ? user.country : ' '}}</div>
+                        </div>
+                        <div class="followsBack">
+                            <button (click)="checkIfFollowBack(user) ? unfollow(user, $event) : follow(user, $event)" [attr.data-hover]="checkIfFollowBack(user) ? 'Unfollow' : 'Remove'" [class]="checkIfFollowBack(user) ? 'following' : 'follow'" *ngIf="isUser"><span>{{checkIfFollowBack(user) ? 'Following' : 'Follow'}}</span> </button>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    </div>
+</div>

@@ -37,16 +37,16 @@ export class FollowsModalComponent implements OnInit {
     closeModal(){
     this.closed.emit();
     }
-    redirect(user: User){
+    redirect(user: User) {
         this.closed.emit();
         this.router.navigate(['/' + user.id + '/trips']);
     }
-checkIfFollowBack(user){
+checkIfFollowBack(user) {
         let exists = this.following.some(usr => usr.id == user.id);
      return exists;
 
 }
-    unfollow(user, event){
+    follow(user, event) {
         event.stopPropagation();
         this.travelrApi.follow(user).subscribe(
             (result) => {
@@ -55,13 +55,13 @@ checkIfFollowBack(user){
             }
         );
     }
-    follow(user, event){
+    unfollow(user, event) {
         event.stopPropagation();
         this.travelrApi.unFollow(user).subscribe(
             (result) => {
                 this.following = this.following.filter(usr => usr.id !== user.id);
                 this.unfollowed.emit(user);
-                if(this.title = 'Following'){
+                if(this.title == 'Following'){
                     this.users = this.users.filter(usr => usr.id !== user.id);
                 }
             }
