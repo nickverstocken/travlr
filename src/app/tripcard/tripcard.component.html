@@ -15,11 +15,13 @@
     <p>{{stop.description}}</p>
     <div class="likeinfo">
         <span *ngIf="stop.like_count == 0">No likes yet, be the first!</span>
-       <span *ngIf="stop.like_count > 0" ><a  href="#">{{isLiked()}}</a><span>and 3 others like this</span></span>
+       <span *ngIf="stop.like_count == 1" ><a  href="#">{{likes[0].first_name + ' ' + likes[0].last_name}}</a><span> likes this</span></span>
+        <span *ngIf="stop.like_count == 2" ><a  href="#">{{likes[0].first_name + ' ' + likes[0].last_name + ' and ' + likes[1].first_name + ' ' + likes[1].last_name}}</a><span> like this</span></span>
+        <span *ngIf="stop.like_count > 2" ><a  href="#">{{likes[0].first_name + ' ' + likes[0].last_name + ', ' + likes[1].first_name + ' ' + likes[1].last_name}}</a><span>and {{stop.like_count - 2}} like this</span></span>
     </div>
     <div class="stopactions group">
         <div class="like">
-            <button><span class="lnr lnr-heart btnicon"></span></button>
+            <button (click)="likeStop()" [class]="liked ? 'liked' : ' '"><span class="lnr lnr-heart btnicon"></span>{{stop.like_count}}</button>
         </div>
         <div class="actions">
             <button (click)="stopedit(stop)"><span class="lnr lnr-pencil btnicon"></span>Edit</button>
