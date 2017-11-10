@@ -47,6 +47,11 @@
           }
           .comment{
             margin-left:42px;
+            .commentDate{
+              margin-top:10px;
+              font-size:11px;
+              color:$placeholder;
+            }
           }
           &:hover{
             background:#fff;

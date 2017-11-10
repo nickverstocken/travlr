@@ -19,42 +19,32 @@
             <div class="card-listContainer">
               <ul class="card-list commentinput">
                 <li class="card-list-item">
-                  <textarea   name="comment" class="input" id="comment" placeholder="Write comment" ></textarea>
+                  <textarea (keydown.enter)="keyUpEvent($event)" [(ngModel)]="commenttext"  name="comment" class="input" id="comment" placeholder="Write comment" ></textarea>
                 </li>
               </ul>
-              <ul class="card-list">
-                <li class="card-list-item">
-                  <a (click)="redirect(user)" >
+              <ul *ngIf="comments?.length > 0" class="card-list">
+                <li  *ngFor="let comment of comments" class="card-list-item">
+                  <a (click)="redirect(comment.user)" >
                     <div class="user centerContent">
                       <div class="profileImg">
-                        <img alt="profilepicture" class="profilepic" src="assets/images/default_profile_image.jpg">
+                        <img alt="profilepicture" class="profilepic" src="{{comment.user.profile_image_thumb}}">
                       </div>
                       <div class="userInfo">
-                        <div class="name">Nick Verstocken</div>
+                        <div class="name">{{comment.user.first_name + ' ' + comment.user.last_name}}</div>
                       </div>
                     </div>
                   </a>
                   <div class="comment">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut maximus convallis pharetra. Nullam vitae finibus purus. In nec sapien pellentesque, maximus sem in, lacinia lorem. Vestibulum pulvinar efficitur mi, ac scelerisque tortor cursus sed. Suspendisse at mauris id dui porta cursus. Suspendisse potenti. Duis maximus quam ac nisl tristique scelerisque. Ut vel nulla vel felis finibus mollis. Fusce tincidunt volutpat nulla in lobortis. In non mattis sapien.</p>
-                  </div>
-                </li>
-                <li class="card-list-item">
-                  <a (click)="redirect(user)" >
-                    <div class="user centerContent">
-                      <div class="profileImg">
-                        <img _ngcontent-c2="" alt="profilepicture" class="profilepic" src="assets/images/default_profile_image.jpg">
-                      </div>
-                      <div class="userInfo">
-                        <div class="name">Nick Verstocken</div>
-                      </div>
-                    </div>
-                  </a>
-                  <div class="comment">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut maximus convallis pharetra. Nullam vitae finibus purus. In nec sapien pellentesque, maximus sem in, lacinia lorem. Vestibulum pulvinar efficitur mi, ac scelerisque tortor cursus sed. Suspendisse at mauris id dui porta cursus. Suspendisse potenti. Duis maximus quam ac nisl tristique scelerisque. Ut vel nulla vel felis finibus mollis. Fusce tincidunt volutpat nulla in lobortis. In non mattis sapien.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut maximus convallis pharetra. Nullam vitae finibus purus. In nec sapien pellentesque, maximus sem in, lacinia lorem. Vestibulum pulvinar efficitur mi, ac scelerisque tortor cursus sed. Suspendisse at mauris id dui porta cursus. Suspendisse potenti. Duis maximus quam ac nisl tristique scelerisque. Ut vel nulla vel felis finibus mollis. Fusce tincidunt volutpat nulla in lobortis. In non mattis sapien.</p>
+                    <p>{{comment.comment}}</p>
+                    <span class="commentDate">{{comment.date | amTimeAgo}}</span>
                   </div>
                 </li>
               </ul>
-
+              <ul *ngIf="!comments || comments?.length == 0" class="card-list">
+                <li class="card-list-item">
+               No comments yet. Be the first to comment!
+                </li>
+              </ul>
             </div>
           </div>
         </div>

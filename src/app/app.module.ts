@@ -29,6 +29,7 @@ import { FollowsModalComponent } from './follows-modal/follows-modal.component';
 import { NgxCarouselModule } from 'ngx-carousel';
 import 'hammerjs';
 import { ImagesModalComponent } from './images-modal/images-modal.component';
+import { MomentModule } from 'angular2-moment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,8 @@ import { ImagesModalComponent } from './images-modal/images-modal.component';
           apiKey: 'AIzaSyAoSQ1d_q1zShvfks5KP5UQ5cWsj7muOwU',
           libraries: ['places']
       }),
-      NgxCarouselModule
+      NgxCarouselModule,
+      MomentModule
   ],
   providers: [TravlrApiService, AuthGuard, AuthService, ApiService],
   bootstrap: [AppComponent]

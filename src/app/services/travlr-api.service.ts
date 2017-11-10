@@ -65,4 +65,10 @@ export class TravlrApiService {
     likeStop(stop) {
         return this.apiService.post('/stop/like/' + stop.id);
     }
+    getComments(mediaId) {
+        return this.apiService.get('/comment/' + mediaId);
+    }
+    addComment(mediaId, comment) {
+        return this.apiService.post('/comment/' + mediaId, comment);
+    }
 }
