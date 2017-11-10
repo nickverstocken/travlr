@@ -14,15 +14,19 @@ export class TripcardComponent implements OnInit {
     @Input() stop: any;
     @Input() currentUser: User;
     @Output() editStop: EventEmitter<any> = new EventEmitter();
+    @Input() isUser;
     liked: Boolean = false;
-    likes: any[];
+    likes: any = [];
     carouselOne: NgxCarousel;
     @Output() showImagesModal: EventEmitter<any> = new EventEmitter();
   constructor(private travelrApi: TravlrApiService) { }
 
   ngOnInit() {
-      this.likes = this.stop.likes.data;
-      this.isLiked();
+      if(this.stop.likes){
+          this.likes = this.stop.likes.data;
+          this.isLiked();
+      }
+
       this.carouselOne = {
           grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
           slide: 1,
@@ -36,9 +40,6 @@ export class TripcardComponent implements OnInit {
   };
   }
 
-    afterChange(e) {
-        console.log('afterChange');
-    }
     stopedit(stop) {
       this.editStop.emit(stop);
     }
@@ -57,9 +58,9 @@ export class TripcardComponent implements OnInit {
                     this.likes = this.likes.filter(usr => usr.id !== this.currentUser.id);
                 }else{
                     this.liked = true;
-                    this.stop.like_count += 1;
                     this.likes.unshift(this.currentUser);
                     this.stop.likes.data = this.likes;
+                    this.stop.like_count += 1;
                 }
             }
         )

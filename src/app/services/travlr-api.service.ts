@@ -71,6 +71,9 @@ export class TravlrApiService {
     addComment(mediaId, comment) {
         return this.apiService.post('/comment/' + mediaId, comment);
     }
+    deleteComment(commentId) {
+        return this.apiService.delete('/comment/' + commentId);
+    }
     updateUser(fields){
         return this.apiService.post('/user/update', fields);
     }

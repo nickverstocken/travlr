@@ -50,6 +50,9 @@ export class AddStopComponent implements OnInit {
             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types:[] });
               autocomplete.addListener("place_changed", () => {
                   let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+                  if(place.geometry === undefined || place.geometry === null ) {
+                      return;
+                  }
                   $('#stopname').val(place.name);
                   if(this.stop.location){
                       this.setLocation(place);
@@ -58,10 +61,6 @@ export class AddStopComponent implements OnInit {
                       this.selectedlocation = place;
                       this.setLocation(place);
                       this.flyToLocation(place.geometry.location.lat(), place.geometry.location.lng());
-                  }
-
-                  if(place.geometry === undefined || place.geometry === null ) {
-                      return;
                   }
               });
           }
@@ -92,9 +91,11 @@ export class AddStopComponent implements OnInit {
   }
 
     addStop() {
+      if(this.stop.name && this.stop.location && this.stop.location.lat && this.stop.location.lng){
+
         this.formData = new FormData();
         this.formData.append('name', this.stop.name);
-        this.formData.append('description', this.stop.description);
+        this.formData.append('description', this.stop.description ? this.stop.description : '');
         this.formData.append('location', this.stop.location.name);
         this.formData.append('lat', this.stop.location.lat);
         this.formData.append('lng', this.stop.location.lng);
@@ -116,6 +117,7 @@ export class AddStopComponent implements OnInit {
                 console.log(error);
             }
         );
+      }
     }
     editStop(){
         this.formData = new FormData();
@@ -128,6 +130,7 @@ export class AddStopComponent implements OnInit {
         this.travelrApi.editStop(this.stop.id, this.formData).subscribe(
             data => {
                 if (data.success) {
+
                     this.stop = data.stop;
                    this.editedStop.emit(this.stop);
                 } else {
@@ -186,6 +189,7 @@ export class AddStopComponent implements OnInit {
                     this.loading = false;
                     console.log(event.body.stop);
                     this.stop.media.data = event.body.stop.media.data;
+                    this.oldstop.media.data = event.body.stop.media.data;
                     this.imagesAdded.emit(this.stop);
             }
         });
@@ -198,8 +202,10 @@ export class AddStopComponent implements OnInit {
         this.closed.emit(this.oldstop);
     }
     cancelStop() {
-        console.log(this.oldstop);
+        this.stop = {};
+        console.log('cancel');
       this.deleteTempMarker.emit(this.oldstop);
+      this.oldstop = {};
     }
     onArrivalDateChanged($event){
         this.stop.arrival_time = this.convertDate($event.date);

@@ -5,6 +5,7 @@ import { Comment} from '../Models/Comment';
 import {User} from '../Models/User';
 import {Router} from '@angular/router';
 import {Form} from "@angular/forms";
+import {AuthService} from "../services/auth.service";
 @Component({
   selector: 'app-images-modal',
   templateUrl: './images-modal.component.html',
@@ -15,10 +16,12 @@ export class ImagesModalComponent implements OnInit {
   @Input() selectedMedia: Media;
   @Input() allMedia: Media[];
   @Input() title;
+  @Input() currentUser: User;
+  @Input() isUser;
     @Output() closed: EventEmitter<any> = new EventEmitter();
     comments: Comment[];
     commenttext: string;
-  constructor(private travelrApi: TravlrApiService, private router: Router) { }
+  constructor(private travelrApi: TravlrApiService, private auth: AuthService,  private router: Router) { }
 
   ngOnInit() {
     this.loadComments(this.selectedMedia.id);
@@ -46,6 +49,15 @@ export class ImagesModalComponent implements OnInit {
           }
       );
   }
+    deletedComment(comment: Comment){
+        this.travelrApi.deleteComment(comment.id).subscribe(
+            result => {
+                if(result.success){
+                    this.comments = this.comments.filter(cmt => cmt.id !== comment.id);
+                }
+            }
+        );
+    }
   loadComments(mediaId){
     this.travelrApi.getComments(mediaId).subscribe(
       result => {

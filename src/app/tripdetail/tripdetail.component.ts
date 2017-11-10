@@ -70,7 +70,7 @@ export class TripdetailComponent implements OnInit {
                         });
             });
         if (this.map) {
-            console.log(this.map.getTotalDistance());
+
         }
     }
 
@@ -79,7 +79,7 @@ export class TripdetailComponent implements OnInit {
             if (event.value) {
                 var id = event.target.id;
                 if (this.oldid != id) {
-                    this.highlightMarker(event.target.id);
+                  //  this.highlightMarker(event.target.id);
                     var visiblestop = this.stops.filter(x => x.id == event.target.id);
                     this.map.onscrolledToNewStop(visiblestop);
                     this.oldid = id;
@@ -90,13 +90,11 @@ export class TripdetailComponent implements OnInit {
         }
     }
 
-    highlightMarker(trip_id) {
 
-    }
 
-    onMapStopClick(tripid) {
-        var scrollTo = $('#' + tripid);
-        this.highlightMarker(tripid);
+    onMapStopClick(stopId) {
+        var scrollTo = $('#' + stopId);
+        this.map.highlightMarker(this.stops.filter(x => x.id == stopId)[0]);
         var scrollContainer = $('.sidepanel-content');
         this.mapscroll = true;
         $('.sidepanel-content').animate({
@@ -116,18 +114,26 @@ export class TripdetailComponent implements OnInit {
         this.showStopEdit = 'show';
     }
     showImagesModal(event){
+        //event = [media, this.stop]
         this.selectedMedia = event[0];
         this.mediaTitle = event[1].name;
         this.allselectedMedia = event[1].media.data;
         this.showImages = 'show';
     }
+    openImagesModal(event){
+        this.showImagesModal([event.media.data[0], event]);
+    }
     closeImagesModal(){
         this.showImages = '';
     }
     onStopModalClosed(stop) {
-        //console.log(stop);
         const index = this.stops.indexOf(this.stops.filter(x => x.id == stop.id)[0]);
-        this.stops[index] = stop;
+        if(index >= 0){
+            if(!(this.stops[index].location.lat == stop.location.lat && this.stops[index].location.lng == stop.location.lng)){
+                this.map.moveMarker(stop,  [stop.location.lng, stop.location.lat]);
+            }
+            this.stops[index] = stop;
+        }
         this.showStopEdit = '';
     }
 
@@ -142,6 +148,7 @@ export class TripdetailComponent implements OnInit {
     onStopDeleted(stop){
         this.map.removeMarker(stop.id);
         this.stops = this.stops.filter(h => h !== stop);
+        this.showStopEdit = '';
     }
     onTripEdited(trip) {
         this.showTripEdit = '';

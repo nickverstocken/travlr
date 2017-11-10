@@ -34,6 +34,7 @@
                       </div>
                     </div>
                   </a>
+                  <span *ngIf="isUser || currentUser.id == comment.user.id" (click)="deletedComment(comment)" class="delete lnr lnr-trash"></span>
                   <div class="comment">
                     <p>{{comment.comment}}</p>
                     <span class="commentDate">{{comment.date | amTimeAgo}}</span>

@@ -23,6 +23,7 @@ export class MapboxMapComponent implements OnInit {
     @Input() stops: Stop[];
     @Output() mapLoaded: EventEmitter<any> = new EventEmitter();
     @Output() stopclicked: EventEmitter<any> = new EventEmitter();
+    @Output() popupclicked: EventEmitter<any> = new EventEmitter();
     totalDistance = 0;
     midPoint;
     previousCoordinates;
@@ -77,7 +78,7 @@ export class MapboxMapComponent implements OnInit {
                     "layout": {
                         "text-font": ["Open Sans Regular"],
                         "text-field": '{title}', // part 2 of this is how to do it
-                        "text-size": 10,
+                        "text-size": 12,
 
                         "text-offset": [0.6, -0.6],
                     },
@@ -96,6 +97,9 @@ export class MapboxMapComponent implements OnInit {
                         padding: 50,
                     });
                 }
+                this.map.on('click', (evt) => {
+                    $('.mapboxgl-popup').remove();
+                });
             this.mapLoaded.emit(true);
             });
 
@@ -143,11 +147,22 @@ export class MapboxMapComponent implements OnInit {
         el.setAttribute('lat', lnglat[1]);
         el.setAttribute('lng', lnglat[0]);
         $(el).on('click', (evt) => {
+            evt.stopPropagation();
             const element = <HTMLDivElement> evt.target;
             this.stopclicked.emit(element.getAttribute('data-stopid'));
             this.flyTo([element.getAttribute('lng'), element.getAttribute('lat')], 7);
         });
         return el;
+    }
+    highlightMarker(stop){
+        $('.mapboxgl-popup').remove();
+        var popup = new mapboxgl.Popup({closeOnClick: false})
+            .setLngLat([stop.location.lng, stop.location.lat])
+            .setHTML(this.createPopup(stop).innerHTML)
+            .addTo(this.map);
+        $('.mapboxgl-popup').on('click', (evt) => {
+            this.popupclicked.emit(stop);
+        });
     }
     createPopup(stop){
         const el = document.createElement('div');
@@ -161,8 +176,7 @@ export class MapboxMapComponent implements OnInit {
             '<div class="arrival-time">' + this.datePipe.transform(stop.arrival_time, 'fullDate') + '</div>' +
             '<div class="title"><h2>' + stop.location.name + '</h2></div></div>';
 
-        return new mapboxgl.Popup()
-            .setHTML(el.innerHTML);
+        return el;
     }
     updateMarker(stop){
         let el = $('.marker[data-stopid=' + stop.id + ']');
@@ -185,11 +199,11 @@ export class MapboxMapComponent implements OnInit {
     addMarker(stopid, image, lnglat, imgCount?, stop?) {
         this.coordinates[stopid] = lnglat;
         if(stop){
-            var popup = this.createPopup(stop);
+           // var popup = this.createPopup(stop);
         }
         new mapboxgl.Marker(this.createMarker(stopid, image, lnglat, imgCount))
             .setLngLat(lnglat)
-            .setPopup(popup)
+            //.setPopup(popup)
             .addTo(this.map);
         this.map.getSource('labels').setData(this.labels);
         this.map.getSource('lines').setData(this.lines);
@@ -203,16 +217,20 @@ export class MapboxMapComponent implements OnInit {
     moveMarker(stop, lnglat){
         let el = $('.marker[data-stopid=' + stop.id + ']');
         $('.marker[data-stopid=' + stop.id + ']').remove();
-        var popup = this.createPopup(stop);
         el[0].setAttribute('lat', lnglat[1]);
         el[0].setAttribute('lng', lnglat[0]);
+        $(el).on('click', (evt) => {
+            evt.stopPropagation();
+            const element = <HTMLDivElement> evt.target;
+            this.stopclicked.emit(element.getAttribute('data-stopid'));
+            this.flyTo([element.getAttribute('lng'), element.getAttribute('lat')], 7);
+        });
         this.coordinates[stop.id] = lnglat;
         new mapboxgl.Marker(el[0])
             .setLngLat(lnglat)
-            .setPopup(popup)
             .addTo(this.map);
         this.redrawLines();
-        this.flyTo(lnglat, 9);
+        this.flyTo(lnglat, this.map.getZoom());
     }
     redrawLines(){
         this.lines = {
@@ -295,7 +313,7 @@ export class MapboxMapComponent implements OnInit {
         return turf.bezier(line, 20000, 1);
     }
     onscrolledToNewStop(visiblestop){
-      this.flyTo([visiblestop[0].location.lng, visiblestop[0].location.lat], 7);
+      this.flyTo([visiblestop[0].location.lng, visiblestop[0].location.lat], 8);
     }
     addTempMarker(event){
         const el = document.getElementById('0');

@@ -45,6 +45,16 @@
               height:30px;
             }
           }
+          .delete{
+            position: absolute;
+            right:10px;
+            top:15px;
+            font-size:20px;
+            cursor:pointer;
+            &:hover{
+              color:$red;
+            }
+          }
           .comment{
             margin-left:42px;
             .commentDate{
