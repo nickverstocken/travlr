@@ -22,7 +22,7 @@
                   <img alt="profilepicture" class="profilepic" src="{{user.profile_image_thumb}}">
                 </div>
                 <div class="userInfo">
-                  <div class="name">{{user.first_name + ' ' + user.last_name }}</div>
+                  <div class="name">{{user.first_name + ' ' + user.name }}</div>
                   <div *ngIf="user.city || user.country" class="location">{{user.city ? user.city : ' '}}, {{user.country ? user.country : ' '}}</div>
                 </div>
                 <div class="followsBack">

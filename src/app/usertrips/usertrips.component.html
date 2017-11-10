@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header #header></app-header>
 <app-mapbox-map></app-mapbox-map>
 <div *ngIf="user" class="sidepanel">
     <section class="group user-profile">
@@ -8,10 +8,10 @@
             </div>
             <div class="overlay">
                 <div id="user">
-                    <img class="profilepic"
+                    <img (click)="showProfileModal()" class="profilepic"
                          src="{{user.profile_image}}"
                          alt="profilepicture" class="profilepic">
-                    <span>{{user.first_name}} {{user.last_name}}</span>
+                    <span>{{user.first_name}} {{user.name}}</span>
                     <span class="grey">{{user.country}}, {{user.city}}</span>
                 </div>
                 <div class="followers">
@@ -44,4 +44,5 @@
     </section>
 </div>
 <app-follows-modal *ngIf="showFollows == 'show'" (unfollowed)="userUnfollowed($event)" (followed)="userFollowed($event)"  [isUser]="isUser" [user]="user" [title]="followsTitle" [show]="showFollows" (closed)="onClosedFollows()"></app-follows-modal>
-<app-add-trip *ngIf="show == 'show'" [show]="show" (deletedTrip)="onTripDeleted($event)" (newTrip)="onTripAdded($event)" (closed)="onClosed()" ></app-add-trip>
+<app-add-trip *ngIf="show == 'show'" [show]="show" (deletedTrip)="onTripDeleted($event)" (newTrip)="onTripAdded($event)" (closed)="onClosed($event)" ></app-add-trip>
+<app-profile-settings *ngIf="showProfile == 'show'" [show]="showProfile" [user]="user" (closed)="onClosedProfile($event)" (userEdited)="onUserEdited($event)"></app-profile-settings>

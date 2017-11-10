@@ -71,4 +71,7 @@ export class TravlrApiService {
     addComment(mediaId, comment) {
         return this.apiService.post('/comment/' + mediaId, comment);
     }
+    updateUser(fields){
+        return this.apiService.post('/user/update', fields);
+    }
 }

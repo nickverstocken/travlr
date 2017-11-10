@@ -124,11 +124,15 @@ export class TripdetailComponent implements OnInit {
     closeImagesModal(){
         this.showImages = '';
     }
-    onStopModalClosed() {
+    onStopModalClosed(stop) {
+        //console.log(stop);
+        const index = this.stops.indexOf(this.stops.filter(x => x.id == stop.id)[0]);
+        this.stops[index] = stop;
         this.showStopEdit = '';
     }
 
-    onTripModalClosed() {
+    onTripModalClosed(trip) {
+        this.trip = trip;
         this.showTripEdit = '';
     }
 
@@ -152,9 +156,9 @@ export class TripdetailComponent implements OnInit {
        // event [106.62913040000001, -6.551775799999999, 1]
         this.map.moveMarker(event[2], [event[0], event[1]]);
     }
-    deleteTempMarker() {
+    deleteTempMarker(stop) {
         this.map.deleteTempMarker();
-        this.onStopModalClosed();
+        this.onStopModalClosed(stop);
     }
     addStop(){
         this.selectedStop = null;

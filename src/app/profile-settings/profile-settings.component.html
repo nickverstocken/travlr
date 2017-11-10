@@ -1,0 +1,58 @@
+<div class="modalContainer {{show}}">
+  <div class="modal">
+    <div class="modalHeader">
+      <div (click)="closeModal()" class="close">
+        <span class="lnr lnr-cross-circle"></span>
+      </div>
+      <h3>Edit profile</h3>
+    </div>
+    <a *ngIf="loading" class="loadingwrap">
+      <div class="loadingwrapInner">
+        <div class="loadingInner">
+          <div class="loading"></div>
+        </div>
+        <div class="loadingtext">
+          {{loadingStatus}}
+        </div>
+      </div>
+    </a>
+    <div class="modalContent">
+      <div class="contentContainer">
+        <form id="editUserForm" name="editUserForm" #f="ngForm" (ngSubmit)="f.form.valid && editUser()"  class="signup-form">
+          <div class="card">
+            <h4>User details</h4>
+            <app-image-uploader class="uploadProfile" [options]="uploaderOptions" [image]="user.profile_image" (fileload)="onLoaded($event)"></app-image-uploader>
+            <input required name="first_name" type="text" class="input" id="first_name" placeholder="First name*"
+                   [(ngModel)]="user.first_name" #first_name="ngModel" [class]="f.submitted && !first_name.valid ? 'input error' : 'input'"
+                   [placeholder]="f.submitted && !first_name.valid ? (first_name.errors.required ? 'First name is required' : 'First name*') : 'First name*'">
+
+            <input required name="last_name" type="text" class="input" id="last_name" placeholder="Last name*"
+                   [(ngModel)]="user.name" #last_name="ngModel" [class]="f.submitted && !last_name.valid ? 'input error' : 'input'"
+                   [placeholder]="f.submitted && !last_name.valid ? (last_name.errors.required ? 'First name is required' : 'Last name*') : 'Last name*'">
+
+            <input [class]="f.submitted && !email.valid ? 'input error' : 'input'" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$"
+                   required [(ngModel)]="user.email" #email="ngModel" name="email"  type="email"
+                   [placeholder]="f.submitted && !email.valid ? (email.errors.required ? 'Email is required' : 'Email*') : 'Email*'">
+            <div *ngIf="f.submitted && !email.valid">
+              <div class="help-block" *ngIf="email.errors.pattern">Not a valid email. </div>
+            </div>
+
+            <input [(ngModel)]="user.city" #city="ngModel" name="city" type="text" class="input" id="city" placeholder="City">
+
+            <select [(ngModel)]="user.country"  name="country" class="select">
+              <option selected value="">- Select country -</option>
+              <option *ngFor="let country of countries" [value]="country.name + ' (' + country.code + ')'">{{country.name}}</option>
+            </select>
+          </div>
+        </form>
+        <div class="actions">
+          <button *ngIf="!delete" form="editUserForm" type="submit" class="button">Edit user</button>
+          <button *ngIf="!delete" (click)="closeModal()" class="button cancel">Cancel</button>
+          <button class="button delete" *ngIf="user.id && !delete" (click)="deleteUser()"><span class="lnr lnr-trash"></span></button>
+          <div class="confirm" *ngIf="delete">Are you sure? <button (click)="confirmDelete(user)" class="button">Yes, delete</button><button (click)="cancelDelete()" class="button cancel">No, cancel</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<a class="modalBg {{show}}"></a>

@@ -30,6 +30,7 @@ import { NgxCarouselModule } from 'ngx-carousel';
 import 'hammerjs';
 import { ImagesModalComponent } from './images-modal/images-modal.component';
 import { MomentModule } from 'angular2-moment';
+import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { MomentModule } from 'angular2-moment';
     MapboxMapComponent,
     MultipleImageUploaderComponent,
     FollowsModalComponent,
-    ImagesModalComponent
+    ImagesModalComponent,
+    ProfileSettingsComponent
   ],
   imports: [
     BrowserModule,

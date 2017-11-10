@@ -19,6 +19,7 @@ export class AddStopComponent implements OnInit {
     loadingStatus = '';
     @Input() tripId;
     @Input() stop: any = {};
+    oldstop;
     @Input() show;
     @Output() closed: EventEmitter<any> = new EventEmitter();
     @Output() newStop: EventEmitter<any> = new EventEmitter();
@@ -43,7 +44,7 @@ export class AddStopComponent implements OnInit {
   constructor(private mapsAPILoader: MapsAPILoader, private travelrApi: TravlrApiService, private datePipe: DatePipe) { }
 
   ngOnInit() {
-
+      this.oldstop = JSON.parse(JSON.stringify(this.stop));
       this.mapsAPILoader.load().then(
           data => {
             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types:[] });
@@ -102,6 +103,7 @@ export class AddStopComponent implements OnInit {
             data => {
                 if (data.success) {
                     this.stop = data.stop;
+                    this.oldstop = this.stop;
                     this.newStop.emit(data.stop);
                 } else {
                     for (var key in data.error) {
@@ -192,10 +194,12 @@ export class AddStopComponent implements OnInit {
         this.delete = false;
     }
     closeModal() {
-        this.closed.emit();
+        console.log(this.oldstop);
+        this.closed.emit(this.oldstop);
     }
     cancelStop() {
-      this.deleteTempMarker.emit();
+        console.log(this.oldstop);
+      this.deleteTempMarker.emit(this.oldstop);
     }
     onArrivalDateChanged($event){
         this.stop.arrival_time = this.convertDate($event.date);

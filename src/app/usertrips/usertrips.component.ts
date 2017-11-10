@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { TravlrApiService } from '../services/travlr-api.service';
 import { AuthService } from '../services/auth.service';
 import {Trip} from '../Models/Trip';
 import {User} from '../Models/User';
+import {HeaderComponent} from "../header/header.component";
 @Component({
   selector: 'app-usertrips',
   templateUrl: './usertrips.component.html',
@@ -18,12 +19,15 @@ export class UsertripsComponent implements OnInit {
   showFollows;
   followsTitle;
   show;
+  showProfile;
   userFollowers: User[];
   isFollower: Boolean = false;
+
   constructor(private router: Router, private route: ActivatedRoute, private travelrApi: TravlrApiService, private auth: AuthService) {
 
   }
-
+    @ViewChild('header')
+    private header: HeaderComponent;
   ngOnInit() {
       this.route.params
           .map(params => params['userid'])
@@ -68,6 +72,16 @@ export class UsertripsComponent implements OnInit {
     onClosed() {
         this.show = '';
     }
+    onClosedProfile(oldUser){
+        this.user = oldUser;
+        this.showProfile = '';
+    }
+    showProfileModal() {
+        if(this.isUser){
+            this.showProfile = 'show';
+        }
+
+    }
     onTripAdded(trip) {
         this.onClosed();
         this.trips.unshift(trip);
@@ -99,5 +113,9 @@ export class UsertripsComponent implements OnInit {
                 this.isFollower = false;
             }
         );
+    }
+    onUserEdited(user) {
+        this.user = user;
+        this.header.user = user;
     }
 }
