@@ -11,7 +11,7 @@ export class ApiService {
     baseUrl: string;
     constructor( private http: Http, private httpClient: HttpClient ) {
         this.baseUrl = 'http://127.0.0.1:8000/api/v1';
-       this.baseUrl = 'http://nickverstocken.be/travelrback/public/api/v1';
+       //this.baseUrl = 'http://nickverstocken.be/travelrback/public/api/v1';
     }
 
     private setHeaders(): Headers {
