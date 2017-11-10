@@ -1,0 +1,94 @@
+@import "../color";
+.modalContainer{
+
+  .modal{
+    margin-left:5px;
+    margin-right:5px;
+    width:100%;
+    max-width:1200px;
+    .imagewrap{
+      display:flex;
+      width:100%;
+      max-height: 70vh;
+      .currentImage{
+        width:100%;
+        margin-right:0px;
+        img {
+          display:block;
+          height:100%;
+          width:100%;
+          background-color: $contentbg;
+        }
+        img[class] {
+          width: 100%;
+        }
+        .poster {
+          object-fit: contain;
+          width:100%;
+        }
+      }
+    }
+      .card{
+        min-width:320px;
+        width:320px;
+        align-self: stretch;
+        overflow:auto;
+        padding-bottom:10px;
+      }
+      .card-list{
+        margin:0px;
+        .card-list-item{
+          padding:10px;
+          .profileImg{
+            img{
+              width:30px;
+              height:30px;
+            }
+          }
+          .delete{
+            position: absolute;
+            right:10px;
+            top:15px;
+            font-size:20px;
+            cursor:pointer;
+            &:hover{
+              color:$red;
+            }
+          }
+          .comment{
+            margin-left:42px;
+            .commentDate{
+              margin-top:10px;
+              font-size:11px;
+              color:$placeholder;
+            }
+          }
+          &:hover{
+            background:#fff;
+          }
+        }
+      }
+    .commentinput{
+      margin-bottom:10px;
+
+    }
+  }
+}
+@media all and (max-width: 800px) {
+  .modalContainer {
+
+    .modal {
+      .imagewrap {
+        display: block;
+
+        .currentImage{
+          width:auto;
+          margin:10px;
+        }
+        .card{
+          width:auto;
+        }
+      }
+    }
+  }
+}

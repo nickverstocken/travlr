@@ -38,14 +38,16 @@ button, .calltoaction{
 .like{
   float:left;
   span{
-    margin:0;
     color:$red;
+    transition: 0.4s all;
   }
   button{
     &:hover{
       border:1px solid $red;
       color:$red;
-
+      span{
+        font-size:16px;
+      }
     }
   }
 }
@@ -430,6 +432,7 @@ a{
     background: #fff;
     position: relative;
     .card-list-item{
+      position: relative;
       display: block;
       padding: 24px;
       background:#fff;

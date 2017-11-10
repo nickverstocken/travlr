@@ -30,11 +30,13 @@ export class AddTripComponent implements OnInit {
     coverImage: File;
     formData: FormData;
     imageLoaded = false;
+    oldTrip;
     uploaderOptions = {width: '100%', height: '150px', 'border-radius': '4px'};
     constructor(private travelrApi: TravlrApiService, private router: Router) {
     }
 
     ngOnInit() {
+        this.oldTrip = JSON.parse(JSON.stringify(this.trip));
         if (this.trip.start_date) {
             this.start_date = {jsdate: new Date(this.trip.start_date)};
         }
@@ -45,7 +47,7 @@ export class AddTripComponent implements OnInit {
     }
 
     closeModal() {
-        this.closed.emit();
+        this.closed.emit(this.oldTrip);
     }
 
     addTrip() {
@@ -60,6 +62,7 @@ export class AddTripComponent implements OnInit {
                     if (data.success) {
                         console.log(data);
                         this.newTrip.emit(data.trip);
+                        this.oldTrip = data.trip;
                     } else {
                         for (var key in data.error) {
                             if (key = 'start_date') {
@@ -132,6 +135,7 @@ export class AddTripComponent implements OnInit {
             data => {
                 if (data.success) {
                     this.trip.cover_photo_path = data.trip.cover_photo_path;
+                    this.oldTrip.cover_photo_path = data.trip.cover_photo_path;
                 }
             }
         );

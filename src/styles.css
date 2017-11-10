@@ -525,3 +525,15 @@ a {
         transform: rotate(360deg);
     }
 }
+.ngxcarouselPointDefault{
+    position: absolute;
+    bottom: 5px;
+    text-align: center;
+    width: 100%;
+}
+.ngxcarouselPointDefault .ngxcarouselPoint li{
+    background:#ccc !important;
+}
+.ngxcarouselPointDefault .ngxcarouselPoint li.active{
+    background:#fff !important;
+}

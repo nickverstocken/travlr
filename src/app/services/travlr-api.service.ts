@@ -47,22 +47,34 @@ export class TravlrApiService {
     uploadStopImages(stop, files): Observable<any> {
        return this.apiService.upload('/stop/' + stop.id + '/saveImages', files);
     }
-    deleteMedia(media){
+    deleteMedia(media) {
         return this.apiService.delete('/media/' + media.id);
     }
-    getFollowers(user){
+    getFollowers(user) {
         return this.apiService.get('/user/' + user.id + '/getfollowers');
     }
-    unFollow(user){
+    unFollow(user) {
         return this.apiService.post('/user/' + user.id + '/unfollow');
     }
-    follow(user){
+    follow(user) {
         return this.apiService.post('/user/' + user.id + '/follow');
     }
-    getUsers(search){
+    getUsers(search) {
         return this.apiService.get('/users?search=' + search);
     }
-    likeStop(stop){
+    likeStop(stop) {
         return this.apiService.post('/stop/like/' + stop.id);
+    }
+    getComments(mediaId) {
+        return this.apiService.get('/comment/' + mediaId);
+    }
+    addComment(mediaId, comment) {
+        return this.apiService.post('/comment/' + mediaId, comment);
+    }
+    deleteComment(commentId) {
+        return this.apiService.delete('/comment/' + commentId);
+    }
+    updateUser(fields){
+        return this.apiService.post('/user/update', fields);
     }
 }

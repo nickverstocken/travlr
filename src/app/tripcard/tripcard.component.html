@@ -1,29 +1,27 @@
 
 <div id="{{stop.id}}" class="card">
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-        <div *ngFor="let media of stop.media.data" class="swiper-slide">
-                <img class="poster" src="{{ media.image }}" alt="">
-        </div>
-        </div>
-        <div class="swiper-pagination swiper-pagination-white"></div>
-        <div class="swiper-button-next swiper-button-white"></div>
-        <div class="swiper-button-prev swiper-button-white"></div>
-    </div>
+    <ngx-carousel *ngIf="!stop?.media.data.length == 0" [inputs]="carouselOne">
+        <ngx-item *ngFor="let media of stop.media.data" NgxCarouselItem>
+            <img (click)="openImagesModal(media)" class="poster" src="{{ media.image }}" alt="">
+        </ngx-item>
+        <span NgxCarouselPrev class='leftRs'><span class="lnr lnr-chevron-left"></span></span>
+        <span NgxCarouselNext class='rightRs'><span class="lnr lnr-chevron-right"></span></span>
+    </ngx-carousel>
     <h2>{{stop.arrival_time | date:'fullDate'}}</h2>
     <h1>{{stop.name}}</h1>
     <p>{{stop.description}}</p>
     <div class="likeinfo">
         <span *ngIf="stop.like_count == 0">No likes yet, be the first!</span>
-       <span *ngIf="stop.like_count > 0" ><a  href="#">{{isLiked()}}</a><span>and 3 others like this</span></span>
+       <span *ngIf="stop.like_count == 1" ><a  href="#">{{likes[0].first_name + ' ' + likes[0].name}}</a><span> likes this</span></span>
+        <span *ngIf="stop.like_count == 2" ><a  href="#">{{likes[0].first_name + ' ' + likes[0].name}}</a> and <a href="#">{{likes[1].first_name + ' ' + likes[1].name}}</a><span> like this</span></span>
+        <span *ngIf="stop.like_count > 2" ><a  href="#">{{likes[0].first_name + ' ' + likes[0].name}}</a>, <a href="#">{{likes[1].first_name + ' ' + likes[1].name}}</a><span>and {{stop.like_count - 2}} like this</span></span>
     </div>
     <div class="stopactions group">
         <div class="like">
-            <button><span class="lnr lnr-heart btnicon"></span></button>
+            <button (click)="likeStop()" [class]="liked ? 'liked' : ' '"><span [class]="liked ? 'fa fa-heart' : 'fa fa-heart-o'"></span>{{stop.like_count}}</button>
         </div>
-        <div class="actions">
+        <div *ngIf="isUser" class="actions">
             <button (click)="stopedit(stop)"><span class="lnr lnr-pencil btnicon"></span>Edit</button>
         </div>
     </div>
-
 </div>

@@ -1,0 +1,56 @@
+<div class="modalContainer {{show}}">
+  <div class="modal">
+    <div class="modalHeader">
+      <div (click)="closeModal()" class="close">
+        <span class="lnr lnr-cross-circle"></span>
+      </div>
+      <h3>{{title}}</h3>
+    </div>
+    <div class="modalContent">
+      <div class="contentContainer">
+        <div class="imagewrap">
+          <div class="currentImage card">
+            <img (click)="nextImage()" class="poster" src="{{ selectedMedia.image }}" alt="">
+          </div>
+
+
+          <div class="card">
+            <h4>Comments</h4>
+            <div class="card-listContainer">
+              <ul class="card-list commentinput">
+                <li class="card-list-item">
+                  <textarea (keydown.enter)="keyUpEvent($event)" [(ngModel)]="commenttext"  name="comment" class="input" id="comment" placeholder="Write comment" ></textarea>
+                </li>
+              </ul>
+              <ul *ngIf="comments?.length > 0" class="card-list">
+                <li  *ngFor="let comment of comments" class="card-list-item">
+                  <a (click)="redirect(comment.user)" >
+                    <div class="user centerContent">
+                      <div class="profileImg">
+                        <img alt="profilepicture" class="profilepic" src="{{comment.user.profile_image_thumb}}">
+                      </div>
+                      <div class="userInfo">
+                        <div class="name">{{comment.user.first_name + ' ' + comment.user.name}}</div>
+                      </div>
+                    </div>
+                  </a>
+                  <span *ngIf="isUser || currentUser.id == comment.user.id" (click)="deletedComment(comment)" class="delete lnr lnr-trash"></span>
+                  <div class="comment">
+                    <p>{{comment.comment}}</p>
+                    <span class="commentDate">{{comment.date | amTimeAgo}}</span>
+                  </div>
+                </li>
+              </ul>
+              <ul *ngIf="!comments || comments?.length == 0" class="card-list">
+                <li class="card-list-item">
+               No comments yet. Be the first to comment!
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<a (click)="closeModal()" class="modalBg {{show}}"></a>

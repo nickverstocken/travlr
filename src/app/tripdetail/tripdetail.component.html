@@ -6,7 +6,7 @@
     <div id="user">
      <a routerLink="/{{trip.user.id}}/trips" href="#"> <img class="profilepic" src="{{trip.user.profile_image_thumb}}"
            alt="profilepicture" class="profilepic">
-      <span>{{trip.user.first_name + ' ' + trip.user.last_name}}</span></a>
+      <span>{{trip.user.first_name + ' ' + trip.user.name}}</span></a>
     </div>
     <div class="actions">
       <button (click)="testfn()"><span class="lnr lnr-users btnicon"></span>Share</button>
@@ -36,12 +36,13 @@
     <div in-viewport
          [inViewportOptions]="{ rootElement: contentsection, partial: false }"
          (inViewportAction)="action($event)" *ngFor="let stop of stops" id="{{stop.id}}" #{{stop.id}}>
-      <app-tripcard [currentUser]="currentUser" (editStop)="editStop($event)" id="{{stop.id}}" [stop]="stop"></app-tripcard>
+      <app-tripcard [isUser]="isUser" (showImagesModal)="showImagesModal($event)" [currentUser]="currentUser" (editStop)="editStop($event)" id="{{stop.id}}" [stop]="stop"></app-tripcard>
     </div>
   </section>
   </div>
-  <app-add-stop (imageDeleted)="onImageDeleted($event)" (editedStop)="onStopEdited($event)" (deletedStop)="onStopDeleted($event)" (imagesAdded)="onImagesAdded($event)" [stop]="selectedStop ? selectedStop : {}" (flyToAndMoveMarker)="moveMarker($event)" (flyToAndAddMarker)="addTempMarker($event)" [tripId]="trip.id" (deleteTempMarker)="deleteTempMarker()" (newStop)="onStopAdded($event)" *ngIf="showStopEdit == 'show'" [show]="showStopEdit" (closed)="onStopModalClosed()"></app-add-stop>
+  <app-add-stop (imageDeleted)="onImageDeleted($event)" (editedStop)="onStopEdited($event)" (deletedStop)="onStopDeleted($event)" (imagesAdded)="onImagesAdded($event)" [stop]="selectedStop ? selectedStop : {}" (flyToAndMoveMarker)="moveMarker($event)" (flyToAndAddMarker)="addTempMarker($event)" [tripId]="trip.id" (deleteTempMarker)="deleteTempMarker($event)" (newStop)="onStopAdded($event)" *ngIf="showStopEdit == 'show'" [show]="showStopEdit" (closed)="onStopModalClosed($event)"></app-add-stop>
 </div>
 </div>
-<app-mapbox-map (mapLoaded)="onMapLoaded($event)" #map *ngIf="stops" [stops]="stops" (stopclicked)="onMapStopClick($event) "></app-mapbox-map>
-<app-add-trip *ngIf="showTripEdit == 'show'" [trip]="trip" (editedTrip)="onTripEdited($event)" (deletedTrip)="onTripDeleted($event)" [show]="showTripEdit" (newTrip)="onTripAdded($event)" (closed)="onTripModalClosed()" ></app-add-trip>
+<app-mapbox-map (mapLoaded)="onMapLoaded($event)" #map *ngIf="stops" [stops]="stops" (stopclicked)="onMapStopClick($event)" (popupclicked)="openImagesModal($event)"></app-mapbox-map>
+<app-add-trip *ngIf="showTripEdit == 'show'" [trip]="trip" (editedTrip)="onTripEdited($event)" (deletedTrip)="onTripDeleted($event)" [show]="showTripEdit" (newTrip)="onTripAdded($event)" (closed)="onTripModalClosed($event)" ></app-add-trip>
+<app-images-modal [currentUser]="currentUser" [isUser]="isUser" *ngIf="showImages" [show]="showImages" (closed)="closeImagesModal()" [selectedMedia]="selectedMedia" [allMedia]="allselectedMedia" [title]="mediaTitle" ></app-images-modal>

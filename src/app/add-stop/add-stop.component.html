@@ -57,7 +57,7 @@
           </div>
         </form>
         <div class="actions">
-          <button *ngIf="!delete" form="addStopForm" type="submit" class="button">{{stop.id ? 'Edit stop' : 'Add stop'}}</button>
+          <button *ngIf="!delete" form="addStopForm" class="button">{{stop.id ? 'Edit stop' : 'Add stop'}}</button>
           <button *ngIf="!delete" (click)="cancelStop()" class="button cancel">Cancel</button>
           <button class="button delete" *ngIf="stop.id && !delete" (click)="deleteStop()"><span class="lnr lnr-trash"></span></button>
           <div class="confirm" *ngIf="delete">Are you sure? <button (click)="confirmDelete(stop)" class="button">Yes, delete</button><button (click)="cancelDelete()" class="button cancel">No, cancel</button></div>

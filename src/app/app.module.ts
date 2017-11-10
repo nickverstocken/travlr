@@ -26,6 +26,11 @@ import { AgmCoreModule } from '@agm/core';
 import { MapboxMapComponent } from './mapbox-map/mapbox-map.component';
 import { MultipleImageUploaderComponent } from './multiple-image-uploader/multiple-image-uploader.component';
 import { FollowsModalComponent } from './follows-modal/follows-modal.component';
+import { NgxCarouselModule } from 'ngx-carousel';
+import 'hammerjs';
+import { ImagesModalComponent } from './images-modal/images-modal.component';
+import { MomentModule } from 'angular2-moment';
+import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +45,9 @@ import { FollowsModalComponent } from './follows-modal/follows-modal.component';
     AddStopComponent,
     MapboxMapComponent,
     MultipleImageUploaderComponent,
-    FollowsModalComponent
+    FollowsModalComponent,
+    ImagesModalComponent,
+    ProfileSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +61,9 @@ import { FollowsModalComponent } from './follows-modal/follows-modal.component';
       AgmCoreModule.forRoot({
           apiKey: 'AIzaSyAoSQ1d_q1zShvfks5KP5UQ5cWsj7muOwU',
           libraries: ['places']
-      })
+      }),
+      NgxCarouselModule,
+      MomentModule
   ],
   providers: [TravlrApiService, AuthGuard, AuthService, ApiService],
   bootstrap: [AppComponent]
