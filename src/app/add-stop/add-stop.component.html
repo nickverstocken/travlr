@@ -33,17 +33,14 @@
           </div>
           <div class="card">
             <h4>Arrival time</h4>
-            <div class="dateTime">
+            <div class="">
               <div class="inputIcon">
                 <input [(ngModel)]="stop_date" (focus)="arrivalTime.openCalendar()" name="arrival_date" [options]="dateOptions" class="input" id="arrival_date" placeholder="Arrival date*"
                        ngx-mydatepicker #arrivalTime="ngx-mydatepicker"
                        (dateChanged)="onArrivalDateChanged($event)">
                 <span (click)="arrivalTime.toggleCalendar()" class="centerContent lnr lnr-calendar-full"></span>
               </div>
-              <div class="inputIcon">
-                <input  name="arrival_time" class="input" id="arrival_time" value="{{this.stop.arrival_time |date:'HH:mm'}}" placeholder="Arrival time*">
-                <span (click)="arrivalTime.toggleCalendar()" class="centerContent lnr lnr-clock"></span>
-              </div>
+
           </div>
           </div>
           <div class="card">

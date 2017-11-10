@@ -60,7 +60,6 @@ export class AddTripComponent implements OnInit {
             this.travelrApi.addTrip(this.trip).subscribe(
                 data => {
                     if (data.success) {
-                        console.log(data);
                         this.newTrip.emit(data.trip);
                         this.oldTrip = data.trip;
                     } else {

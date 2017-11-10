@@ -187,7 +187,6 @@ export class AddStopComponent implements OnInit {
                 case HttpEventType.Response:
                     this.loadingStatus = '';
                     this.loading = false;
-                    console.log(event.body.stop);
                     this.stop.media.data = event.body.stop.media.data;
                     this.oldstop.media.data = event.body.stop.media.data;
                     this.imagesAdded.emit(this.stop);
@@ -198,12 +197,10 @@ export class AddStopComponent implements OnInit {
         this.delete = false;
     }
     closeModal() {
-        console.log(this.oldstop);
         this.closed.emit(this.oldstop);
     }
     cancelStop() {
         this.stop = {};
-        console.log('cancel');
       this.deleteTempMarker.emit(this.oldstop);
       this.oldstop = {};
     }

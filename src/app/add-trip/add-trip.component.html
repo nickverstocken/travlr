@@ -41,7 +41,7 @@
             <div class="card">
                 <h4>Privacy</h4>
                 <a id="private" (click)="setSelected($event, 'private')" class="optionSelector centerContent">
-                    <div class="optionIcon"></div>
+                    <div class="optionIcon {{trip?.privacy == 'private' ? 'selected' : ''}}"></div>
                     <div class="optionContent">
                         <div class="optionTitle">
                             Only me
@@ -52,7 +52,7 @@
                     </div>
                 </a>
                 <a id="followers"  (click)="setSelected($event,'followers')"  class="optionSelector centerContent">
-                    <div class="optionIcon selected"></div>
+                    <div class="optionIcon {{trip?.privacy ? (trip?.privacy == 'followers' ? 'selected' : '') : 'selected'}}"></div>
                     <div class="optionContent">
                         <div class="optionTitle">
                             Followers
@@ -63,7 +63,7 @@
                     </div>
                 </a>
                 <a id="public" (click)="setSelected($event,'public')" class="optionSelector centerContent">
-                    <div class="optionIcon"></div>
+                    <div class="optionIcon {{trip?.privacy == 'public' ? 'selected' : ''}}"></div>
                     <div class="optionContent">
                         <div class="optionTitle">
                             Public
