@@ -182,7 +182,8 @@ export class AddStopComponent implements OnInit {
                 case HttpEventType.Response:
                     this.loadingStatus = '';
                     this.loading = false;
-                    this.stop = event.body.stop;
+                    console.log(event.body.stop);
+                    this.stop.media.data = event.body.stop.media.data;
                     this.imagesAdded.emit(this.stop);
             }
         });

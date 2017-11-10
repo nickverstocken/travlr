@@ -39,20 +39,15 @@ button, .calltoaction{
   float:left;
   span{
     color:$red;
+    transition: 0.4s all;
   }
   button{
     &:hover{
       border:1px solid $red;
       color:$red;
-    }
-    &.liked{
-      background:$red;
-      color:#fff;
-      border:1px solid $red;
       span{
-        color:#fff;
+        font-size:16px;
       }
-
     }
   }
 }

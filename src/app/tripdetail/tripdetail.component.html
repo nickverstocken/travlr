@@ -36,7 +36,7 @@
     <div in-viewport
          [inViewportOptions]="{ rootElement: contentsection, partial: false }"
          (inViewportAction)="action($event)" *ngFor="let stop of stops" id="{{stop.id}}" #{{stop.id}}>
-      <app-tripcard [currentUser]="currentUser" (editStop)="editStop($event)" id="{{stop.id}}" [stop]="stop"></app-tripcard>
+      <app-tripcard (showImagesModal)="showImagesModal($event)" [currentUser]="currentUser" (editStop)="editStop($event)" id="{{stop.id}}" [stop]="stop"></app-tripcard>
     </div>
   </section>
   </div>
@@ -45,3 +45,4 @@
 </div>
 <app-mapbox-map (mapLoaded)="onMapLoaded($event)" #map *ngIf="stops" [stops]="stops" (stopclicked)="onMapStopClick($event) "></app-mapbox-map>
 <app-add-trip *ngIf="showTripEdit == 'show'" [trip]="trip" (editedTrip)="onTripEdited($event)" (deletedTrip)="onTripDeleted($event)" [show]="showTripEdit" (newTrip)="onTripAdded($event)" (closed)="onTripModalClosed()" ></app-add-trip>
+<app-images-modal *ngIf="showImages" [show]="showImages" (closed)="closeImagesModal()" [selectedMedia]="selectedMedia" [allMedia]="allselectedMedia" [title]="mediaTitle" ></app-images-modal>

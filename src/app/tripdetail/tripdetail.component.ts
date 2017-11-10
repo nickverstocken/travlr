@@ -6,7 +6,8 @@ import {AuthService} from '../services/auth.service';
 import {Trip} from '../Models/Trip';
 import {User} from '../Models/User';
 import {Stop} from '../Models/Stop';
-import {MapboxMapComponent} from "../mapbox-map/mapbox-map.component";
+import {MapboxMapComponent} from '../mapbox-map/mapbox-map.component';
+import {Media} from '../Models/Media';
 
 declare var $: any;
 
@@ -25,6 +26,10 @@ export class TripdetailComponent implements OnInit {
     currentUser: User;
     showTripEdit;
     showStopEdit;
+    showImages;
+    selectedMedia: Media;
+    allselectedMedia: Media[];
+    mediaTitle;
     selectedStop: Stop;
     userFollowers: User[];
     isFollower: Boolean = false;
@@ -110,7 +115,15 @@ export class TripdetailComponent implements OnInit {
     showStopModal() {
         this.showStopEdit = 'show';
     }
-
+    showImagesModal(event){
+        this.selectedMedia = event[0];
+        this.mediaTitle = event[1].name;
+        this.allselectedMedia = event[1].media.data;
+        this.showImages = 'show';
+    }
+    closeImagesModal(){
+        this.showImages = '';
+    }
     onStopModalClosed() {
         this.showStopEdit = '';
     }
