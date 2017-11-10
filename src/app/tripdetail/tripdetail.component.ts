@@ -33,6 +33,7 @@ export class TripdetailComponent implements OnInit {
     selectedStop: Stop;
     userFollowers: User[];
     isFollower: Boolean = false;
+    stopModalAction;
     constructor(private travelrApi: TravlrApiService, private router: Router, private route: ActivatedRoute, private auth: AuthService) {
     }
 
@@ -132,8 +133,14 @@ export class TripdetailComponent implements OnInit {
             if(!(this.stops[index].location.lat == stop.location.lat && this.stops[index].location.lng == stop.location.lng)){
                 this.map.moveMarker(stop,  [stop.location.lng, stop.location.lat]);
             }
-            this.stops[index] = stop;
+            if(stop.id){
+                this.stops[index] = stop;
+            }else{
+                stop = {};
+            }
+
         }
+        this.selectedStop = new Stop;
         this.showStopEdit = '';
     }
 
@@ -168,10 +175,12 @@ export class TripdetailComponent implements OnInit {
         this.onStopModalClosed(stop);
     }
     addStop(){
+        this.stopModalAction = 'new';
         this.selectedStop = null;
         this.showStopModal();
     }
     editStop(stop) {
+        this.stopModalAction = 'edit';
         this.selectedStop = stop;
         this.showStopModal();
     }
@@ -185,7 +194,13 @@ export class TripdetailComponent implements OnInit {
         }
         this.map.addMarker(stop.id, null, [Number(stop.location.lng), Number(stop.location.lat)]);
         this.trip.total_km = Math.round(this.map.getTotalDistance()).toString();
-        //this.onStopModalClosed();
+        stop = {};
+    }
+    sortArray(array){
+        console.log(this.stops);
+       const date: Date = array.arrival_time;
+        this.stops.sort((a, b) => new Date(a.arrival_time).getTime() - new Date(b.arrival_time).getTime());
+       console.log(this.stops);
     }
     onImagesAdded(stop){
         this.map.updateMarker(stop);

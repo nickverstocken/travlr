@@ -40,7 +40,7 @@
     </div>
   </section>
   </div>
-  <app-add-stop (imageDeleted)="onImageDeleted($event)" (editedStop)="onStopEdited($event)" (deletedStop)="onStopDeleted($event)" (imagesAdded)="onImagesAdded($event)" [stop]="selectedStop ? selectedStop : {}" (flyToAndMoveMarker)="moveMarker($event)" (flyToAndAddMarker)="addTempMarker($event)" [tripId]="trip.id" (deleteTempMarker)="deleteTempMarker($event)" (newStop)="onStopAdded($event)" *ngIf="showStopEdit == 'show'" [show]="showStopEdit" (closed)="onStopModalClosed($event)"></app-add-stop>
+  <app-add-stop (imageDeleted)="onImageDeleted($event)" [action]="stopModalAction" (editedStop)="onStopEdited($event)" (deletedStop)="onStopDeleted($event)" (imagesAdded)="onImagesAdded($event)" [stop]="selectedStop ? selectedStop : {}" (flyToAndMoveMarker)="moveMarker($event)" (flyToAndAddMarker)="addTempMarker($event)" [tripId]="trip.id" (deleteTempMarker)="deleteTempMarker($event)" (newStop)="onStopAdded($event)" *ngIf="showStopEdit == 'show'" [show]="showStopEdit" (closed)="onStopModalClosed($event)"></app-add-stop>
 </div>
 </div>
 <app-mapbox-map (mapLoaded)="onMapLoaded($event)" #map *ngIf="stops" [stops]="stops" (stopclicked)="onMapStopClick($event)" (popupclicked)="openImagesModal($event)"></app-mapbox-map>

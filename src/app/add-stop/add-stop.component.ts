@@ -17,10 +17,12 @@ import {Form} from "@angular/forms";
 export class AddStopComponent implements OnInit {
     loading = false;
     loadingStatus = '';
+    @Input() action;
     @Input() tripId;
     @Input() stop: any = {};
     oldstop;
     @Input() show;
+    @Input() lastStopDate;
     @Output() closed: EventEmitter<any> = new EventEmitter();
     @Output() newStop: EventEmitter<any> = new EventEmitter();
     @Output() editedStop: EventEmitter<any> = new EventEmitter();
@@ -45,6 +47,12 @@ export class AddStopComponent implements OnInit {
 
   ngOnInit() {
       this.oldstop = JSON.parse(JSON.stringify(this.stop));
+      if(this.action == 'new'){
+          this.stop = {};
+          this.oldstop = {};
+      }
+
+      console.log(this.stop);
       this.mapsAPILoader.load().then(
           data => {
             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types:[] });
@@ -73,8 +81,6 @@ export class AddStopComponent implements OnInit {
       }
   }
   moveLocation(place) {
-      //this.stop.location.lat = place.geometry.location.lat();
-      //this.stop.location.lng = place.geometry.location.lng();
       this.flyToAndMoveMarker.emit([place.geometry.location.lng(), place.geometry.location.lat(), this.stop]);
   }
   setLocation(place){
@@ -92,7 +98,6 @@ export class AddStopComponent implements OnInit {
 
     addStop() {
       if(this.stop.name && this.stop.location && this.stop.location.lat && this.stop.location.lng){
-
         this.formData = new FormData();
         this.formData.append('name', this.stop.name);
         this.formData.append('description', this.stop.description ? this.stop.description : '');
@@ -197,6 +202,8 @@ export class AddStopComponent implements OnInit {
         this.delete = false;
     }
     closeModal() {
+        this.stop = {};
+        this.oldstop = {};
         this.closed.emit(this.oldstop);
     }
     cancelStop() {

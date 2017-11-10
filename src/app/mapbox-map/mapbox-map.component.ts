@@ -198,9 +198,6 @@ export class MapboxMapComponent implements OnInit {
     }
     addMarker(stopid, image, lnglat, imgCount?, stop?) {
         this.coordinates[stopid] = lnglat;
-        if(stop){
-           // var popup = this.createPopup(stop);
-        }
         new mapboxgl.Marker(this.createMarker(stopid, image, lnglat, imgCount))
             .setLngLat(lnglat)
             //.setPopup(popup)
@@ -215,6 +212,9 @@ export class MapboxMapComponent implements OnInit {
         this.redrawLines();
     }
     moveMarker(stop, lnglat){
+        if(!stop.id){
+            stop.id = 0;
+        }
         let el = $('.marker[data-stopid=' + stop.id + ']');
         $('.marker[data-stopid=' + stop.id + ']').remove();
         el[0].setAttribute('lat', lnglat[1]);
@@ -229,7 +229,10 @@ export class MapboxMapComponent implements OnInit {
         new mapboxgl.Marker(el[0])
             .setLngLat(lnglat)
             .addTo(this.map);
-        this.redrawLines();
+        if(stop.id != 0){
+            this.redrawLines();
+        }
+
         this.flyTo(lnglat, this.map.getZoom());
     }
     redrawLines(){
