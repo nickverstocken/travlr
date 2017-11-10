@@ -10,7 +10,7 @@
           <a  href="/trips/1">Who are we?</a>
         </li>
         <li>
-          <a (click)="scrollTo('#container')" href="#" id="logo"><img id="logoimg" src="../../assets/images/travlr.svg" alt="Travlr Logo"></a>
+          <a (click)="scrollTo('#container')" href="#" id="logo"><img id="logoimg" src="./assets/images/travlr.svg" alt="Travlr Logo"></a>
         </li>
         <li>
           <a (click)="scrollTo('#contact')" href="#">Contact</a>
@@ -32,7 +32,7 @@
       </div>
 
       <div>
-        <a (click)="scrollTo('#info')" class="calltoaction">Travelr, say what?!</a><a href="/login" class="calltoaction">Login</a>
+        <a (click)="scrollTo('#info')" class="calltoaction">Travelr, say what?!</a><a [routerLink]="['/login']"  class="calltoaction">Login</a>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
         <a href="/login" class="calltoaction">Let's start</a>
       </div>
 -->
-      <video autoplay loop width="auto" height="91.75%" src="../../assets/images/mapscreen.mp4"></video>
+      <video autoplay loop width="auto" height="91.75%" src="./assets/images/mapscreen.mp4"></video>
     </section>
   </div>
 

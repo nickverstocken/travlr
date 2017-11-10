@@ -1,6 +1,6 @@
 
 <div id="{{stop.id}}" class="card">
-    <ngx-carousel *ngIf="!stop?.media.data.length == 0" [inputs]="carouselOne">
+    <ngx-carousel *ngIf="stop && !(stop?.media?.data.length == 0)" [inputs]="carouselOne">
         <ngx-item *ngFor="let media of stop.media.data" NgxCarouselItem>
             <img (click)="openImagesModal(media)" class="poster" src="{{ media.image }}" alt="">
         </ngx-item>

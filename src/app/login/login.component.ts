@@ -351,4 +351,7 @@ export class LoginComponent implements OnInit {
     onFileLoaded(file: File) {
       this.register.profile_image = file;
     }
+    checkAuth(){
+        return this.auth.loggedIn();
+    }
 }

@@ -1,18 +1,18 @@
 <header class="group" id="header">
-<a [routerLink]="[ user.id + '/trips']" id="logo"><img id="logoimg" src="../../assets/images/travlr.svg" alt="Travlr Logo"></a>
-    <div *ngIf="auth.loggedIn()" class="search">
+<a [routerLink]="[ user.id + '/trips']" id="logo"><img id="logoimg" src="./assets/images/travlr.svg" alt="Travlr Logo"></a>
+    <div *ngIf="checkAuth()" class="search">
         <span class="lnr lnr-magnifier iconsearch centerContent"></span>
         <input  #search class="search_input" (focus)="focusSearch()" placeholder="Search for a friend..."  [ngModel]="searchvalue" (ngModelChange)="searchUser($event)"/>
     </div>
     <nav class="group" id="navigation" role="navigation">
         <ul>
-            <li *ngIf="auth.loggedIn()"><a class="current" [routerLink]="[ user.id + '/trips']" ><img src="{{user.profile_image_thumb}}"
+            <li *ngIf="checkAuth()"><a class="current" [routerLink]="[ user.id + '/trips']" ><img src="{{user.profile_image_thumb}}"
                 alt="profilepicture" class="profilepic">
                 <span>Profile</span></a></li>
-            <li *ngIf="auth.loggedIn()">
+            <li *ngIf="checkAuth()">
                 <a  href="#">Discover</a>
             </li>
-            <li *ngIf="auth.loggedIn()">
+            <li *ngIf="checkAuth()">
                 <a href="#">Friends activity</a>
             </li>
             <li>

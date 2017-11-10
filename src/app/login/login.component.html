@@ -17,7 +17,7 @@
 
     <div class="tabs-content">
         <div id="login-tab-content" class="active">
-            <div *ngIf="!auth.loggedIn()">
+            <div *ngIf="!checkAuth()">
             <input type="button" class="button facebook" value="login with facebook">
             <div class="seperator centerContent">
                 <div class="seperator-inner">or</div>
@@ -44,7 +44,7 @@
                 <p><a href="#">Forgot your password?</a></p>
             </div>
             </div>
-            <div *ngIf="auth.loggedIn()">
+            <div *ngIf="checkAuth()">
                 <div class="seperator centerContent">
                     <div class="seperator-inner">Login</div>
                 </div>
@@ -57,7 +57,7 @@
         </div>
         <div id="signup-tab-content" >
 
-            <div *ngIf="!auth.loggedIn()">
+            <div *ngIf="!checkAuth()">
             <input type="button" class="button facebook" value="sign up with facebook">
             <div class="seperator centerContent">
                 <div class="seperator-inner">or</div>
@@ -96,7 +96,7 @@
                    <div [innerHTML]="registermsg" ></div>
                 </div>
             </div>
-            <div *ngIf="auth.loggedIn()">
+            <div *ngIf="checkAuth()">
                 <div class="seperator centerContent">
                     <div class="seperator-inner">Login</div>
                 </div>

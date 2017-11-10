@@ -186,8 +186,10 @@ export class AddStopComponent implements OnInit {
                     break;
                 case HttpEventType.UploadProgress:
                     const percentDone = Math.round(100 * event.loaded / event.total);
-                    console.log(`File is ${percentDone}% uploaded.`);
-                    this.loadingStatus = 'Uploading data';
+                    this.loadingStatus = `Files uploading  ${percentDone}% `;
+                    if(percentDone == 100){
+                        this.loadingStatus = 'Saving data...';
+                    }
                     break;
                 case HttpEventType.Response:
                     this.loadingStatus = '';

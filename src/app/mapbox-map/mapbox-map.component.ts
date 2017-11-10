@@ -47,8 +47,10 @@ export class MapboxMapComponent implements OnInit {
             maxZoom: 16,
             center: [this.lng, this.lat]
         });
-        if (this.stops) {
+
+
             this.map.on('load', () => {
+                if (this.stops) {
                 this.map.addSource('lines', {
                     type: 'geojson',
                     data: this.lines
@@ -72,22 +74,22 @@ export class MapboxMapComponent implements OnInit {
                     },
                 });
                 this.map.addLayer({
-                    "id": "labels",
-                    "type": "symbol",
-                    "source": "labels",
-                    "layout": {
-                        "text-font": ["Open Sans Regular"],
-                        "text-field": '{title}', // part 2 of this is how to do it
-                        "text-size": 12,
+                        "id": "labels",
+                        "type": "symbol",
+                        "source": "labels",
+                        "layout": {
+                            "text-font": ["Open Sans Regular"],
+                            "text-field": '{title}', // part 2 of this is how to do it
+                            "text-size": 12,
 
-                        "text-offset": [0.6, -0.6],
-                    },
-                    "paint": {
-                        "text-color": "#2C3E50",
-                        "text-halo-color": "#fff",
-                        "text-halo-width": 1
-                    }
-                });
+                            "text-offset": [0.6, -0.6],
+                        },
+                        "paint": {
+                            "text-color": "#2C3E50",
+                            "text-halo-color": "#fff",
+                            "text-halo-width": 1
+                        }
+                    });
                 this.createStops(this.stops);
                 var bounds = this.coordinates.reduce(function (bounds, coord) {
                     return bounds.extend(coord);
@@ -101,9 +103,10 @@ export class MapboxMapComponent implements OnInit {
                     $('.mapboxgl-popup').remove();
                 });
             this.mapLoaded.emit(true);
+            }
             });
 
-        }
+
     }
     
     createStops(stops: any) {
@@ -118,6 +121,7 @@ export class MapboxMapComponent implements OnInit {
             }
             this.previousCoordinates = [lng, lat];
         }
+        console.log(this.labels);
         this.map.getSource('labels').setData(this.labels);
         this.map.getSource('lines').setData(this.lines);
     }
@@ -161,7 +165,9 @@ export class MapboxMapComponent implements OnInit {
             .setHTML(this.createPopup(stop).innerHTML)
             .addTo(this.map);
         $('.mapboxgl-popup').on('click', (evt) => {
-            this.popupclicked.emit(stop);
+            if(stop.media.data.length > 0){
+                this.popupclicked.emit(stop);
+            }
         });
     }
     createPopup(stop){
@@ -277,7 +283,6 @@ export class MapboxMapComponent implements OnInit {
         this.labels.features.push(this.midPoint);
         const curved = this.getCurvedLine(origin, new_point, destination);
         this.lines.features.push(curved);
-
     }
     getTotalDistance(){
         return this.totalDistance;

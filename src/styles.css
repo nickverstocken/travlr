@@ -162,6 +162,9 @@ a {
 .mapboxgl-popup{
     font-family: 'Lato', sans-serif;
 }
+.mapboxgl-popup img{
+    cursor: pointer;
+}
 .marker.no-image:after{
     opacity: 0;
 }

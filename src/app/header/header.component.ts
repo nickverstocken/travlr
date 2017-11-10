@@ -28,6 +28,9 @@ export class HeaderComponent implements OnInit {
       }
 
     }
+    checkAuth(){
+      return this.auth.loggedIn();
+    }
     focusSearch(){
         this.suggestions.nativeElement.style.display = "block";
     }
